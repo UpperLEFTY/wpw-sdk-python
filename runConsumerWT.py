@@ -1,6 +1,5 @@
-import InterruptedException
-import WPWithinWrapperImpl
-import WWTypes
+from library import WPWithinWrapperImpl
+from library import WWTypes
 import time
 
 
