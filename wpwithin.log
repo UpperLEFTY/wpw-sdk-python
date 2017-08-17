@@ -1,0 +1,59 @@
+time="2017-08-17T12:22:07+01:00" level=debug msg="End log setup" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="After initLogFile()" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="Before startRPC()" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="Before startRPC()" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="Before assign RPC config." 
+time="2017-08-17T12:22:07+01:00" level=debug msg="After assign RPC config." 
+time="2017-08-17T12:22:07+01:00" level=debug msg="Before rpc.NewService" Configuration: ="{Protocol:binary Framed:false Buffered:false Host:127.0.0.1 Port:8778 Secure:false BufferSize:8192 Loglevel: Logfile: CallbackPort:0}" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="begin rpc.ServiceImpl.NewService()" Config="{Protocol:binary Framed:false Buffered:false Host:127.0.0.1 Port:8778 Secure:false BufferSize:8192 Loglevel: Logfile: CallbackPort:0}" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="end rpc.ServiceImpl.NewService()" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="After rpc.NewService" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="Attempting to start RPC interface on port" port=8778 
+time="2017-08-17T12:22:07+01:00" level=debug msg="begin rpc.ServiceImpl.start()" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="Begin RPC.WPWithinHandler.NewWPWithinHander()" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="End RPC.WPWithinHandler.NewWPWithinHander()" 
+time="2017-08-17T12:22:07+01:00" level=debug msg="Starting the rpc server on...: 127.0.0.1:8778" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Begin RPC.WPWithinHandler.Setup()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="begin wpwithin.Initialise()" description="an example consumer device" name=my-device 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will perform parameter validation" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Parameter validation passed" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will create new core.SDKFactory" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Did create new core.SDKFactory" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will create new core.Core" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Did create new core.Core" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will call doWebSocketLogSetup()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Begin wpwithin.doWebSocketLogSetup()" Configuration={true 8182 debug,error,fatal} 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Config.WSLogEnable is true -- proceed to setup WS Logger" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Clean up Config.WSLogLevel -- remove spaces" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Split up Config.WSLogLevel to array -- comma delimiter" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Setting up logger to support the specified log levels." log levels=[debug error fatal] 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Attempt to get external IPv4 address" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Did get external IPv4" IPv4=172.17.0.149 
+time="2017-08-17T12:22:12+01:00" level=debug msg="will call wslog.Initialise()" ip_add=172.17.0.149 log levels=[debug error fatal] ws_port=8182 
+time="2017-08-17T12:22:12+01:00" level=info msg="Did set up WebSocket logger @ http://172.17.0.149:8182" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Did call wslog.Initialise()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="End doWebSocketLogSetup()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="After call doWebSocketLogSetup()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will call Factory.GetDevice()" description="an example consumer device" name=my-device 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will call Factory.GetOrderManager()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="After call Factory.GetOrderManager()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will call Factory.GetSvcBroadcaster()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="After call Factory.GetSvcBroadcaster()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will call Factory.GetSvcScanner()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="After call Factory.GetSvcScanner()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="end wpwithin.Initialise()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="wp.callback not set, not setting handler in WPWithin." 
+time="2017-08-17T12:22:12+01:00" level=debug msg="End RPC.WPWithinHandler.Setup()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Begin RPC.WPWithinHandler.GetDevice()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Begin wpwithin.GetDevice()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="End wpwithin.GetDevice()" Device=&{6a72c89d-d02e-4a2c-5bd0-0b760ec42b8f my-device an example consumer device map[] 172.17.0.149} 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Found 0 services for device" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="End RPC.WPWithinHandler.GetDevice()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Begin RPC.WPWithinHandler.ServiceDiscovery()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Begin wpwithin.DeviceDiscovery()" timeoutMillis=8000 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Will call wp.core.SvcScanner.ScanForServices()" 
+time="2017-08-17T12:22:12+01:00" level=debug msg="Begin ScanForServices(timeout = 8000)" 
+time="2017-08-17T12:22:22+01:00" level=debug msg="Finish ScanForServices()" Found=0 Run=true Timed out=true 
+time="2017-08-17T12:22:22+01:00" level=debug msg="After call wp.core.SvcScanner.ScanForService()" 
+time="2017-08-17T12:22:22+01:00" level=debug msg="End wpwithin.DeviceDiscovery()" Search result=[] 
+time="2017-08-17T12:22:22+01:00" level=debug msg="End RPC.WPWithinHandler.ServiceDiscovery()" 

@@ -1,16 +1,16 @@
 import WWTypes
 
-from wpthrift_types import ttypes
-from wpthrift_types.ttypes import Device
-from wpthrift_types.ttypes import HCECard
-from wpthrift_types.ttypes import PaymentResponse
-from wpthrift_types.ttypes import Price
-from wpthrift_types.ttypes import PricePerUnit
-from wpthrift_types.ttypes import Service
-from wpthrift_types.ttypes import ServiceDetails
-from wpthrift_types.ttypes import ServiceMessage
-from wpthrift_types.ttypes import TotalPriceResponse
-from wpthrift_types.ttypes import ServiceDeliveryToken
+from wpwithin.wpthrift_types import ttypes
+from wpwithin.wpthrift_types.ttypes import Device
+from wpwithin.wpthrift_types.ttypes import HCECard
+from wpwithin.wpthrift_types.ttypes import PaymentResponse
+from wpwithin.wpthrift_types.ttypes import Price
+from wpwithin.wpthrift_types.ttypes import PricePerUnit
+from wpwithin.wpthrift_types.ttypes import Service
+from wpwithin.wpthrift_types.ttypes import ServiceDetails
+from wpwithin.wpthrift_types.ttypes import ServiceMessage
+from wpwithin.wpthrift_types.ttypes import TotalPriceResponse
+from wpwithin.wpthrift_types.ttypes import ServiceDeliveryToken
 
 import logging
 

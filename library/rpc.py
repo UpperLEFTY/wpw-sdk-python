@@ -13,8 +13,8 @@ def startRPC(self, port, eventListenerPort):
       callbackPortString = " -callbackport=" + str(eventListenerPort)
   else:
   	  callbackPortString = ""
-  logging .debug(str(os.getcwd()) + "/rpc-agent" + "-port " + str(port) + " -logfile wpwithin.log -loglevel debug,warn,error,fatal,info" + str(callbackPortString))
-  process = launcherLocal.launch(cfg, os.getcwd() + "/rpc-agent", "-port " + str(port) + " -logfile wpwithin.log -loglevel debug,warn,error,fatal,info" + str(callbackPortString))
+  logging .debug(str(os.getcwd()) + "/library/iot-core-component/rpc-agent-darwin-386" + "-port " + str(port) + " -logfile wpwithin.log -loglevel debug,warn,error,fatal,info" + str(callbackPortString))
+  process = launcherLocal.launch(cfg, os.getcwd() + "/library/iot-core-component/rpc-agent-darwin-386", "-port " + str(port) + " -logfile wpwithin.log -loglevel debug,warn,error,fatal,info" + str(callbackPortString))
   return process
 
 def stopRPC(self, process):

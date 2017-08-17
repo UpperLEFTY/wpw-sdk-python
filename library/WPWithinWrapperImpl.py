@@ -3,10 +3,10 @@
 import ServiceAdapter
 import EventServer
 import rpc
-import wpthrift_types
+import wpwithin.wpthrift_types
 from wpwithin.WPWithin import Client
-from wpthrift_types import ttypes
-from wpthrift_types.ttypes import ServiceDeliveryToken
+from wpwithin.wpthrift_types import ttypes
+from wpwithin.wpthrift_types.ttypes import ServiceDeliveryToken
 import time
 import thrift
 from thrift import Thrift

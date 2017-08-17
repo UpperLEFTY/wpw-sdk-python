@@ -1,6 +1,5 @@
-import InterruptedException
-import WPWithinWrapperImpl
-import WWTypes
+import library.WPWithinWrapperImpl as WPWithinWrapperImpl
+import library.WWTypes as WWTypes
 import time
 
 def discoverDevices(): # throws WPWithinGeneralException {
