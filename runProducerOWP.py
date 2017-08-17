@@ -1,5 +1,5 @@
-import WPWithinWrapperImpl
-import WWTypes
+from library import WPWithinWrapperImpl
+from library import WWTypes
 import time
 
 def run():
@@ -7,7 +7,7 @@ def run():
 		print "WorldpayWithin Sample Producer..."
 		global wpw
 		wpw = WPWithinWrapperImpl.WPWithinWrapperImpl('127.0.0.1', 9090, False)
-		wpw.setup("Producer Example", "Example WorldpayWithin producer")		
+		wpw.setup("Producer Example CHANGE ME", "Example WorldpayWithin producer")		
 		svc = WWTypes.WWService();
 		svc.setName("Car charger")
 		svc.setDescription("Can charge your hybrid / electric car")
