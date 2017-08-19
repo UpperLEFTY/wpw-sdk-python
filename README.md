@@ -40,6 +40,9 @@ To try the examples in two different console windows, or if installed on two dev
 
 You can see there are four phases; discover, negotiation, payment and then service delivery, for more information visit our website at http://www.worldpaywithin.com.
 
+## What IoT devices can I run this on
+Hopefully any - we've only tested this on RPi - Raspberry Pis at the moment, but welcome experiments on all other kinds of devices! Note that they will need to be on the same network - and that network should allow for UDP broadcast traffic. Most mobile hotspots do allow this, a lot of corporate networks however do not...
+
 ## Want to contribute:
 
 Want to contribute, then please clone the repo and create a branch, once you've made your changes create a pull request, we will review your code, and if accepted it will be merged into the code base. You can also raise issues here on github, or contact us direct at innovation@worldpay.com or alternatively join our slack channel at iotpay.slack.com.
