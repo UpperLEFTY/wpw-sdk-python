@@ -1,6 +1,6 @@
 # WorldpayWithin Python SDK
 
-The Python implementation for the Worldpay Within IoT payment SDK.
+The Python implementation for the Worldpay Within IoT payment SDK. This SDK enables smart devices to discover each other, negogiate a price for services, make a payment (through the Worldpay payments gateway) for services, and then consume services via a 'trusted trigger'. For more information see our documentation website here: http://www.worldpaywithin.com
 
 Get stared
 1. Download this repo
