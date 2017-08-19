@@ -489,3 +489,138 @@ INFO:root:convertserviceDeliveryToken
 INFO:root:initialised WWService
 INFO:root:convertWWServiceDeliveryToken
 INFO:root:SHOULD STOP RPC AGENT
+INFO:root:Starting Port: 8778
+INFO:root:Initialising launcher
+DEBUG:root:/Users/worldpay/Desktop/kevcode2/WPW2017/wpw-refactored/wpw-sdk-python-port 8778 -logfile wpwithin.log -loglevel debug,warn,error,fatal,info
+DEBUG:root:Determine the OS and Architecture this application is currently running on
+DEBUG:root:hostOS: darwin
+DEBUG:root:hostArchitecture: x64
+DEBUG:root:Validate detected parameters against config
+DEBUG:root:darwin
+DEBUG:root:win32
+DEBUG:root:windows
+DEBUG:root:linux
+DEBUG:root:x64
+DEBUG:root:ia32
+INFO:root:launching Darwin application
+INFO:root:Starting Port: 8778
+INFO:root:Initialising launcher
+DEBUG:root:/Users/worldpay/Desktop/kevcode2/WPW2017/wpw-refactored/wpw-sdk-python-port 8778 -logfile wpwithin.log -loglevel debug,warn,error,fatal,info
+DEBUG:root:Determine the OS and Architecture this application is currently running on
+DEBUG:root:hostOS: darwin
+DEBUG:root:hostArchitecture: x64
+DEBUG:root:Validate detected parameters against config
+DEBUG:root:darwin
+DEBUG:root:win32
+DEBUG:root:windows
+DEBUG:root:linux
+DEBUG:root:x64
+DEBUG:root:ia32
+INFO:root:launching Darwin application
+INFO:root:Starting Port: 8778
+INFO:root:Initialising launcher
+DEBUG:root:/Users/worldpay/Desktop/kevcode2/WPW2017/wpw-refactored/wpw-sdk-python-port 8778 -logfile wpwithin.log -loglevel debug,warn,error,fatal,info
+DEBUG:root:Determine the OS and Architecture this application is currently running on
+DEBUG:root:hostOS: darwin
+DEBUG:root:hostArchitecture: x64
+DEBUG:root:Validate detected parameters against config
+DEBUG:root:darwin
+DEBUG:root:win32
+DEBUG:root:windows
+DEBUG:root:linux
+DEBUG:root:x64
+DEBUG:root:ia32
+INFO:root:launching Darwin application
+INFO:root:Starting Port: 8778
+INFO:root:Initialising launcher
+DEBUG:root:/Users/worldpay/Desktop/kevcode2/WPW2017/wpw-refactored/wpw-sdk-python-port 8778 -logfile wpwithin.log -loglevel debug,warn,error,fatal,info
+DEBUG:root:Determine the OS and Architecture this application is currently running on
+DEBUG:root:hostOS: darwin
+DEBUG:root:hostArchitecture: x64
+DEBUG:root:Validate detected parameters against config
+DEBUG:root:darwin
+DEBUG:root:win32
+DEBUG:root:windows
+DEBUG:root:linux
+DEBUG:root:x64
+DEBUG:root:ia32
+INFO:root:launching Darwin application
+INFO:root:STARTED connection to SDK via RPC thrift
+INFO:root:SHOULD HAVE SETUP DEVICE: (my-device), (an example consumer device)
+INFO:root:convertDevice
+INFO:root:initialised WWDevice
+INFO:root:SHOULD HAVE RUN GET DEVICE
+INFO:root:STARTING DO DEVICE DISCOVERY
+INFO:root:convertServiceMessages
+INFO:root:Finished device discovery
+INFO:root:SHOULD STOP RPC AGENT
+INFO:root:Starting Port: 9090
+INFO:root:Initialising launcher
+DEBUG:root:/Users/worldpay/Desktop/kevcode2/WPW2017/wpw-refactored/wpw-sdk-python-port 9090 -logfile wpwithin.log -loglevel debug,warn,error,fatal,info
+DEBUG:root:Determine the OS and Architecture this application is currently running on
+DEBUG:root:hostOS: darwin
+DEBUG:root:hostArchitecture: x64
+DEBUG:root:Validate detected parameters against config
+DEBUG:root:darwin
+DEBUG:root:win32
+DEBUG:root:windows
+DEBUG:root:linux
+DEBUG:root:x64
+DEBUG:root:ia32
+INFO:root:launching Darwin application
+INFO:root:STARTED connection to SDK via RPC thrift
+INFO:root:SHOULD HAVE SETUP DEVICE: (Producer Example CHANGE ME), (Example WorldpayWithin producer)
+INFO:root:initialised WWService
+INFO:root:initialised WWPrice
+INFO:root:initialised WWPricePerUnit
+INFO:root:SHOULD HAVE INIT THE PRODUCER
+INFO:root:convertWWService
+INFO:root:convertWWPrices
+INFO:root:convertWWPrice
+INFO:root:convertWWPricePerUnit
+INFO:root:SHOULD HAVE ADDED SERVICE
+INFO:root:SHOULD HAVE START SERVICE BROADCAST
+INFO:root:Starting Port: 8778
+INFO:root:Initialising launcher
+DEBUG:root:/Users/worldpay/Desktop/kevcode2/WPW2017/wpw-refactored/wpw-sdk-python-port 8778 -logfile wpwithin.log -loglevel debug,warn,error,fatal,info
+DEBUG:root:Determine the OS and Architecture this application is currently running on
+DEBUG:root:hostOS: darwin
+DEBUG:root:hostArchitecture: x64
+DEBUG:root:Validate detected parameters against config
+DEBUG:root:darwin
+DEBUG:root:win32
+DEBUG:root:windows
+DEBUG:root:linux
+DEBUG:root:x64
+DEBUG:root:ia32
+INFO:root:launching Darwin application
+INFO:root:STARTED connection to SDK via RPC thrift
+INFO:root:SHOULD HAVE SETUP DEVICE: (my-device), (an example consumer device)
+INFO:root:convertDevice
+INFO:root:initialised WWDevice
+INFO:root:SHOULD HAVE RUN GET DEVICE
+INFO:root:STARTING DO DEVICE DISCOVERY
+INFO:root:convertServiceMessages
+INFO:root:convertServiceMessage
+INFO:root:initialised WWServiceMessage
+INFO:root:Finished device discovery
+INFO:root:initialised WWHCECard
+INFO:root:convertWWHCECard
+INFO:root:convertServiceDetailsList
+INFO:root:convertServiceDetails
+INFO:root:initialised WWServiceDetails
+INFO:root:convertServicePrices
+INFO:root:convertPrice
+INFO:root:initialised WWPrice
+INFO:root:convertTotalPriceResponse
+INFO:root:initialised WWPrice
+INFO:root:convertWWTotalPriceResponse
+INFO:root:convertPaymentResponse
+INFO:root:initialised WWPaymentResponse
+INFO:root:convertserviceDeliveryToken
+INFO:root:initialised WWService
+INFO:root:convertWWServiceDeliveryToken
+INFO:root:convertserviceDeliveryToken
+INFO:root:initialised WWService
+INFO:root:convertWWServiceDeliveryToken
+INFO:root:SHOULD STOP RPC AGENT

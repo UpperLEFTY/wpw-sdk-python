@@ -48,19 +48,39 @@ class launcher(object):
           logging.debug("Invalid OS/Architecture combination detected")
 
     def detectHostOS(self):
-        return process.platform
+        """Return the operating system as 'windows', 'darwin' or 'linux'."""
+        os_name = platform.system().lower()
+        if os_name == 'windows' or os_name == 'darwin':
+            return os_name
+        else:
+            return 'linux'
 
     def detectHostArchitecture(self):
-        return process.arch
+        """Return the architecture as '386', 'amd64', 'arm32' or 'arm64'."""
+        out = ''
+        if platform.machine().lower()[:3] == 'arm':
+            out += 'arm'
+        if sys.maxsize > 2**32:
+            if out == 'arm':
+                out += '64'
+            else:
+                out = 'amd64'
+        else:
+            if out == 'arm':
+                out += '64'
+            else:
+                out = '386'
+        return out
+
 
     #Make it a thread!    
     def launchDarwin(self, path, flags):
         logging.info("launching Darwin application")
-        cmd = ""
+        cmd = '/library/iot-core-component/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
         if flags == None:
-            cmd = path + ""
+            cmd = path + cmd + ""
         else:
-            cmd = path + " " + flags
+            cmd = path + cmd + " " + flags
         #ls_output=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         #ls_output=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         proc=subprocess.Popen(cmd, shell=True)
@@ -68,11 +88,11 @@ class launcher(object):
     
     def launchLinux(self, path, flags):
         logging.info("launching Linux application")
-        cmd = ""
+        cmd = '/library/iot-core-component/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
         if flags == None:
-            cmd = path + ""
+            cmd = path + cmd + ""
         else:
-            cmd = path + " " + flags
+            cmd = path + cmd + " " + flags
         #ls_output=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         #ls_output=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         proc=subprocess.Popen(cmd, shell=True)
@@ -80,11 +100,11 @@ class launcher(object):
         
     def launchWindows(self, path, flags):
         logging.info("launching Windows application")
-        cmd = ""
+        cmd = '/library/iot-core-component/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
         if flags == None:
-            cmd = path + ".exe"
+            cmd = path + cmd + ""
         else:
-            cmd = path + ".exe " + flags
+            cmd = path + cmd + " " + flags
         proc=subprocess.Popen(cmd, shell=True)
         return proc
 
