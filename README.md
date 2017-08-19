@@ -1,6 +1,6 @@
-# WorldpayWithin Python SDK
+# Worldpay Within - The Python SDK
 
-The Python implementation for the Worldpay Within IoT payment SDK. This SDK enables smart devices to discover each other, negogiate a price for services, make a payment (through the Worldpay payments gateway) for services, and then consume services via a 'trusted trigger'. For more information see our documentation website here: http://www.worldpaywithin.com
+The Python implementation for the Worldpay Within IoT payment SDK. This SDK, or Software Development Kit, enables smart devices to discover each other, negogiate a price for services, make a payment (through the Worldpay payments gateway) for services, and then consume services via a 'trusted trigger'. For more information see our documentation website here: http://www.worldpaywithin.com
 
 ![The Worldpay Within puzzle piece](http://wptechinnovation.github.io/worldpay-within-sdk/images/architecture/worldpayWithinFig1.png)
 
@@ -26,7 +26,7 @@ To try the examples in two different console windows, or if installed on two dev
 ## Debugging:
 * If you get some odd error messages talking about a 'rpc-agent'
 * Try typing the following command: 'ps -e | grep rpc' to get the pid(s) of rpc-agents that are running. 
-* Then do kill <pid> e.g. kill 13249234 to kill these processes.
+* Then do kill &lt;pid&gt; e.g. kill 13249234 to kill these processes.
 * Try re-running the examples - if this fails then please contact us at innovation@worldpay.com or on our slack channel or raise an issue in github.
   
 ## So what does it do:
