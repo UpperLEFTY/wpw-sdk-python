@@ -4,6 +4,11 @@ The Python implementation for the Worldpay Within IoT payment SDK. This SDK, or 
 
 ![The Worldpay Within puzzle piece](http://wptechinnovation.github.io/worldpay-within-sdk/images/architecture/worldpayWithinFig1.png)
 
+## Get started - EXPERIMENTAL !
+1. Download this repo
+2. Run the following command "sudo python setup.py install" from the root of the folder (This should install the thrift library - this is experimental at the moment)
+3. Try the examples...
+
 ## Get started
 1. Download this repo
 2. Download apache thrift 0.10.0 (latest version)
