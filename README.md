@@ -17,7 +17,7 @@ The Python implementation for the Worldpay Within IoT payment SDK. This SDK, or 
 5. Try the examples...
 
 ## Run the examples
-To try the examples in two different console windows, or if installed on two devices (make sure on same network):
+To try the examples in two different console windows, or if installed on two devices (make sure on same network), use the OWP files which stands for Online Worldpay (Our UK gateway) rather than WT files which stands for (Worldpay Total):
 * python runConsumerOWP.py - in one window
 * python runProducerOWP.py OR python runProducerCallbacksOWP.py - in the other window
 * The two smart devices should communicate with each other and make a payment
