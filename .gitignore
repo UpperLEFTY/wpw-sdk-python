@@ -2,4 +2,7 @@
 dist
 build
 wpwithinpy.egg-info
+uuid.txt
+worldpay-within-wrapper.log
+wpwithin.log
 
