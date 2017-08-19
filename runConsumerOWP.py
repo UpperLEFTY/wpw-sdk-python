@@ -1,5 +1,5 @@
-import library.WPWithinWrapperImpl as WPWithinWrapperImpl
-import library.WWTypes as WWTypes
+import wpwithinpy.WPWithinWrapperImpl as WPWithinWrapperImpl
+import wpwithinpy.WWTypes as WWTypes
 import time
 
 def discoverDevices(): # throws WPWithinGeneralException {

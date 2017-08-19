@@ -1,5 +1,5 @@
-from library import WPWithinWrapperImpl
-from library import WWTypes
+from wpwithinpy import WPWithinWrapperImpl
+from wpwithinpy import WWTypes
 import time
 import os
 
