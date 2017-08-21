@@ -1,6 +1,13 @@
 import wpwithinpy.WPWithinWrapperImpl as WPWithinWrapperImpl
 import wpwithinpy.WWTypes as WWTypes
 import time
+import os
+
+def killTheRpcAgent():
+    # print "Will attempt to kill the rpc-agent"
+    killCommand = "ps aux | grep -i 'rpc-agent.*port.*8778' | awk '{print $2}' | xargs kill -9"
+    os.system(killCommand)
+    # print "Should have killed barfing rpc-agent"
 
 def discoverDevices(): # throws WPWithinGeneralException {
     devices = wpw.deviceDiscovery(8000)
@@ -45,10 +52,11 @@ def getAvailableServices(): #throws WPWithinGeneralException {
 
 def getServicePrices(serviceId): # throws WPWithinGeneralException {
     prices = wpw.getServicePrices(serviceId)
-    print "{0:10.2f} prices found for service id {1}\n".format(len(prices), serviceId)
+    print "{1} prices found for service id {1}\n".format(len(prices), serviceId)
     if prices != None and len(prices) > 0:
         for price in prices:
-            print "Price:"
+            print "Price: {0:.2f}".format(float(price.pricePerUnit.amount) / float(100))
+            print "CurrencyCode: " + price.pricePerUnit.currencyCode
             print "Id: {0}\n".format(price.getId())
             print "Description: {0}\n".format(price.getDescription())
             print "UnitId: {0}\n".format(price.getUnitId())
@@ -64,9 +72,9 @@ def getServicePriceQuote(serviceId, numberOfUnits, priceId): # throws WPWithinGe
             print "Did retrieve price quote:"
             print "Merchant client key: {0}\n".format(tpr.getMerchantClientKey())
             print "Payment reference id: {0}\n".format(tpr.getPaymentReferenceId())
-            print "Units to supply: {0:10.2f}\n".format(tpr.getUnitsToSupply())
+            print "Units to supply: {0}\n".format(tpr.getUnitsToSupply())
             #print "Currency code: {0}\n".format(tpr.getCurrencyCode()) #TODO fix this
-            print "Total price: {0:10.2f}\n".format(tpr.getTotalPrice())
+            print "Total price: {0:.2f}\n".format(float(tpr.getTotalPrice())/float(100))
     else:
         print "Result of select service is None"
     return tpr
@@ -77,7 +85,7 @@ def purchaseService(serviceId, pReq): # throws WPWithinGeneralException {
     if pResp != None:
 
             print 'Payment response:'
-            print "Total paid: {0:10.2f}\n".format(pResp.getTotalPaid())
+            print "Total paid: {0:.2f}\n".format(float(pResp.getTotalPaid())/float(100))
             print "ServiceDeliveryToken.issued: {0}\n".format(sdt.getIssued()) #not coming through right
             print "ServiceDeliveryToken.expiry: {0}\n".format(sdt.getExpiry())
             print "ServiceDeliveryToken.key: %{0}\n".format(sdt.getKey())
@@ -149,7 +157,10 @@ def run():
             print "Could not get device"
         wpw.stopRPCAgent()
     except WWTypes.WPWithinGeneralException as wpge:
+        killTheRpcAgent()
         print wpge
-
-
+    except Exception as wpge2:
+        killTheRpcAgent()
+        print wpge2
+        
 run()
