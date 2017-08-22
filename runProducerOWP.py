@@ -31,19 +31,23 @@ def run():
 		wpw.addService(svc)
 		broadcastDuration = 20000
 		durationSeconds = broadcastDuration / 1000
-		print "WorldpayWithin Sample Producer: Starting broadcast..."		
-		wpw.startServiceBroadcast(broadcastDuration) #20000
-		repeat = 0
-		while repeat < durationSeconds:
-		    print "Producer Waiting " + str(durationSeconds - repeat) + " seconds to go..."
-		    time.sleep(1)
-		    repeat = repeat + 1
-		print "Stopped broadcasting, RPC still running"
-		repeat2 = 0
-		while repeat2 < 99999999999:
-		    print "Producer keeping alive (to receive callbacks...)"
-		    time.sleep(1)
-		    repeat2 = repeat2 + 1        
+
+		while True:
+			print "WorldpayWithin Sample Producer: Starting broadcast..."		
+			wpw.startServiceBroadcast(broadcastDuration) #20000
+			wpw.startServiceBroadcast(0)
+			repeat = 0
+			while repeat < durationSeconds:
+			    print "Producer Waiting " + str(durationSeconds - repeat) + " seconds to go..."
+			    time.sleep(1)
+			    repeat = repeat + 1
+
+		# print "Stopped broadcasting, RPC still running"
+		# repeat2 = 0
+		# while repeat2 < 99999999999:
+		#     print "Producer keeping alive (to receive callbacks...)"
+		#     time.sleep(1)
+		#     repeat2 = repeat2 + 1        
 	except WWTypes.WPWithinGeneralException as e:
 		print e
 
