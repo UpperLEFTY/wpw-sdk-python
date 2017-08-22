@@ -35,7 +35,7 @@ def run():
 		while True:
 			print "WorldpayWithin Sample Producer: Starting broadcast..."		
 			wpw.startServiceBroadcast(broadcastDuration) #20000
-			wpw.startServiceBroadcast(0)
+			wpw.startServiceBroadcast(durationSeconds)
 			repeat = 0
 			while repeat < durationSeconds:
 			    print "Producer Waiting " + str(durationSeconds - repeat) + " seconds to go..."
