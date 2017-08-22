@@ -4,10 +4,7 @@ import time
 import os
 
 def killTheRpcAgent():
-    # print "Will attempt to kill the rpc-agent"
-    killCommand = "ps aux | grep -i 'rpc-agent.*port.*8778' | awk '{print $2}' | xargs kill -9"
-    os.system(killCommand)
-    # print "Should have killed barfing rpc-agent"
+    print "Will attempt to kill the rpc-agent - this will now be handled by the SDK"
 
 def discoverDevices(): # throws WPWithinGeneralException {
     devices = wpw.deviceDiscovery(8000)
@@ -143,7 +140,7 @@ def run():
                                 for svcPrice in svcPrices:
                                     onlyRunOnce3 = onlyRunOnce3 + 1
                                     #Select the first price in the list
-                                    tpr = getServicePriceQuote(svcDetail.getServiceId(), 5, svcPrice.getId())
+                                    tpr = getServicePriceQuote(svcDetail.getServiceId(), 6, svcPrice.getId())
                                     print 'Client ID: {0}\n'.format(tpr.getClientId())
                                     print 'Server ID: {0}\n'.format(tpr.getServerId())
                                     paymentResponse = purchaseService(svcDetail.getServiceId(), tpr)
