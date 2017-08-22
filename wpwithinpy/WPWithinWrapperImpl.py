@@ -15,6 +15,7 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 import WWTypes
 import logging
+import os
 
 class WPWithinWrapperImpl(object):
     cachedClient = None
@@ -31,6 +32,11 @@ class WPWithinWrapperImpl(object):
         self.rpcRunning = False
         self.rpcProcess = self.startRpc(self.ipAddress, self.portNumber, self.eventListenerPort)
         self.setClientIfNotSet()
+
+    def killRpcAgent(self):
+        killCommand = "ps aux | grep -i 'rpc-agent.*port.*" + str(self.portNumber) + "' | awk '{print $2}' | xargs kill -9"
+        # Finding the process based on the port number is safer than relying on the pid number that it was started on
+        os.system(killCommand)
 
     def setClientIfNotSet(self):
 		if self.cachedClient == None:
@@ -64,16 +70,18 @@ class WPWithinWrapperImpl(object):
             logging.info("STARTED connection to SDK via RPC thrift")
             return client
         except Exception as e: 
-		    logging.info("Error: Couldn't open the RpcListener: " + str(e))
-		    raise WWTypes.WPWithinGeneralException("Error: Couldn't open the RpcListener", e)		    
+            logging.info("Error: Couldn't open the RpcListener: " + str(e))
+            self.killRpcAgent()
+            raise WWTypes.WPWithinGeneralException("Error: Couldn't open the RpcListener", e)		    
 
     def setup(self, deviceName, deviceDescription):
         try:
 	        self.getClient().setup(deviceName, deviceDescription)
 	        logging.info("SHOULD HAVE SETUP DEVICE: (" + str(deviceName) + "), (" + str(deviceDescription) + ")")
         except Exception as e:
-		    logging.info("Error - Failure to setup DEVICE in the wrapper, could be the new config file is missing - gotcha!: " + str(e))
-		    raise WWTypes.WPWithinGeneralException("Error - Failure to setup DEVICE in the wrapper, could be the new config file is missing - gotcha!: ", e)
+            logging.info("Error - Failure to setup DEVICE in the wrapper, could be the new config file is missing - gotcha!: " + str(e))
+            self.killRpcAgent()
+            raise WWTypes.WPWithinGeneralException("Error - Failure to setup DEVICE in the wrapper, could be the new config file is missing - gotcha!: ", e)
 
     def addService(self, theService):
         try:
@@ -81,6 +89,7 @@ class WPWithinWrapperImpl(object):
             logging.info('SHOULD HAVE ADDED SERVICE')
         except Exception as e:
             logging.info("Error - Add service to producer failed with Rpc call to the SDK lower level: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Error - Add service to producer failed with Rpc call to the SDK lower level", e)
 
     def removeService(self, svc):
@@ -88,6 +97,7 @@ class WPWithinWrapperImpl(object):
             self.getClient().removeService(ServiceAdapter.convertWWService(svc))
         except Exception as e:
             logging.info("Removal of service failed in the wrapper: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Removal of service failed in the wrapper: ", e)
 
     def requestServices(self):
@@ -95,6 +105,7 @@ class WPWithinWrapperImpl(object):
         	return ServiceAdapter.convertServiceDetailList(self.getClient().requestServices())
         except Exception as e: 
             logging.info("Request services failed in wrapper: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Request services failed in wrapper", e)               
 
     def getDevice(self):
@@ -105,6 +116,7 @@ class WPWithinWrapperImpl(object):
             return wwDevice
         except Exception as e: 
             logging.info("Get device in wrapper failed: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Get device in wrapper failed", e)                     
 
     def stopRPCAgent(self):
@@ -113,6 +125,7 @@ class WPWithinWrapperImpl(object):
             self.rpcProcess.kill()
         except Exception as e: 
             logging.info("Could not stop the RPC service: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Could not stop the RPC service", e)                     
 
     def deviceDiscovery(self, timeout):
@@ -123,6 +136,7 @@ class WPWithinWrapperImpl(object):
             return svcMsgs
         except Exception as e: 
             logging.info("Failed device discovery in wrapper: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Failed device discovery in wrapper", e)                     
 
     def initConsumer(self, scheme, hostname, port, urlPrefix, serverId, hceCard, pspConfig):
@@ -130,6 +144,7 @@ class WPWithinWrapperImpl(object):
 		    self.getClient().initConsumer(scheme, hostname, port, urlPrefix, serverId, ServiceAdapter.convertWWHCECard(hceCard), pspConfig)
         except Exception as e: 
             logging.info("Initiating the consumer failed in the wrapper: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Initiating the consumer failed in the wrapper", e)   
 
     def initProducer(self, pspConfig):
@@ -138,38 +153,54 @@ class WPWithinWrapperImpl(object):
             logging.info('SHOULD HAVE INIT THE PRODUCER')
         except Exception as e: 
             logging.info("Initiating the producer failed in the wrapper: " + str(e))
+            self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Initiating the producer failed in the wrapper", e) 
 
     def startServiceBroadcast(self, timeout):
-		try:
-		    self.getClient().startServiceBroadcast(timeout)
-		    logging.info('SHOULD HAVE START SERVICE BROADCAST')
-		except WWTypes.WPWithinGeneralException as e:
-		     print "Start service broadcast in wrapper failed: " + e
+        try:
+            self.getClient().startServiceBroadcast(timeout)
+            logging.info('SHOULD HAVE START SERVICE BROADCAST')
+        except WWTypes.WPWithinGeneralException as e:
+            self.killRpcAgent()
+            print "Start service broadcast in wrapper failed: " + e
+        except Exception:
+            self.killRpcAgent()            
 
     def stopServiceBroadcast(self):
-		try:
-		    self.getClient().stopServiceBroadcast()
-		except WPWithinGeneralException as e:
-		    print "Stop service broadcast failed: " + e
+        try:
+            self.getClient().stopServiceBroadcast()
+        except WPWithinGeneralException as e:
+            self.killRpcAgent()
+            print "Stop service broadcast failed: " + e
+        except Exception:
+            self.killRpcAgent()            
 
     def getServicePrices(self, serviceId):
-		try:
-		    return ServiceAdapter.convertServicePrices(self.getClient().getServicePrices(serviceId)) 
-		except WWTypes.WPWithinGeneralException as e:
-		    print "Get Service Prices failed in wrapper: " + e
+    	try:
+    	    return ServiceAdapter.convertServicePrices(self.getClient().getServicePrices(serviceId)) 
+    	except WWTypes.WPWithinGeneralException as e:
+            self.killRpcAgent()
+            print "Get Service Prices failed in wrapper: " + e
+        except Exception:
+            self.killRpcAgent()            
 
     def selectService(self, serviceId, numberOfUnits, priceId):
-		try:
-		    return ServiceAdapter.convertTotalPriceResponse(self.getClient().selectService(serviceId, numberOfUnits, priceId))		
-		except WPWithinGeneralException as e:
-		    print "Select service failed in wrapper: " + e
+    	try:
+    	    return ServiceAdapter.convertTotalPriceResponse(self.getClient().selectService(serviceId, numberOfUnits, priceId))		
+    	except WPWithinGeneralException as e:
+            self.killRpcAgent()
+     	    print "Select service failed in wrapper: " + e
+        except Exception:
+            self.killRpcAgent()            
 
     def makePayment(self, request):
-		try:
-		    return ServiceAdapter.convertPaymentResponse(self.getClient().makePayment(ServiceAdapter.convertWWTotalPriceResponse(request)))
-		except WWTypes.WPWithinGeneralException as e:
-		    print "Failed to make payment in the wrapper: " + e
+        try:
+            return ServiceAdapter.convertPaymentResponse(self.getClient().makePayment(ServiceAdapter.convertWWTotalPriceResponse(request)))
+        except WWTypes.WPWithinGeneralException as e:
+            self.killRpcAgent()
+            print "Failed to make payment in the wrapper: " + e
+        except Exception:
+            self.killRpcAgent()
 
     def beginServiceDelivery(self, serviceId, serviceDeliveryToken, unitsToSupply):
         try:
@@ -189,12 +220,14 @@ class WPWithinWrapperImpl(object):
             sdt = self.getClient().beginServiceDelivery(serviceId, csdt, unitsToSupply)
             return ServiceAdapter.convertServiceDeliveryToken(sdt)
         except Exception as e:
+            self.killRpcAgent()
             print "Failed to begin Service Delivery in the wrapper: " + str(e)
         #except WWTypes.WPWithinGeneralException as e:
         #    print "Failed to begin Service Delivery in the wrapper: " + e
 
     def endServiceDelivery(self, serviceId, serviceDeliveryToken, unitsReceived):
-		try:
-		    self.getClient().endServiceDelivery(serviceId, ServiceAdapter.convertWWServiceDeliveryToken(serviceDeliveryToken), unitsReceived)
-		except Exception as e:
-		    print "Failed to end Service Delivery in the wrapper: " + str(e)
+     	try:
+     	    self.getClient().endServiceDelivery(serviceId, ServiceAdapter.convertWWServiceDeliveryToken(serviceDeliveryToken), unitsReceived)
+    	except Exception as e:
+            self.killRpcAgent()
+    	    print "Failed to end Service Delivery in the wrapper: " + str(e)
