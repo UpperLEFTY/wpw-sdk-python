@@ -70,6 +70,7 @@ struct ServiceMessage {
 	4: string serverId
 	5: string urlPrefix
 	6: string scheme
+	7: string deviceName
 }
 
 struct ServiceDetails {

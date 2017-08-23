@@ -55,6 +55,9 @@ class WWServiceMessage(object):
     def __init__(self):
         logging.info('initialised WWServiceMessage')
 
+    def setDeviceName(self, deviceName):
+        self.deviceName = deviceName
+
     def setDeviceDescription(self, deviceDescription):
         self.deviceDescription = deviceDescription
 
@@ -73,6 +76,9 @@ class WWServiceMessage(object):
     def setScheme(self, scheme):
         self.scheme = scheme
 
+    def getDeviceName(self):
+        return self.deviceName
+        
     def getDeviceDescription(self):
         return self.deviceDescription
 
