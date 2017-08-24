@@ -24,10 +24,11 @@ def resetJson():
 def outputJson(svcMsg):
     global data2
     data2 = data2 + [{    'serverid' : svcMsg.getServerId(),
+                            'devicename' :svcMsg.getDeviceName(),
                             'devicedescription' : svcMsg.getDeviceDescription(),
                             'hostname' : svcMsg.getHostname(),
                             'portnumber' : svcMsg.getPortNumber(),
-                            'urlprefix' : svcMsg.getUrlPrefix()
+                            'urlprefix' : svcMsg.getUrlPrefix(),
                             }]
     try:
         with open('/Library/WebServer/Documents/worldpaywithin/device-scanner.json', 'w') as outfile:
@@ -40,14 +41,24 @@ def scanOnce():
     global data2
     data2 = []
     #resetJson()
-    flagScanTimeout = 5000
+    flagScanTimeout = 9000
     print 'Starting Device Scanner Written in Python.'
     global wpw
     wpw = WPWithinWrapperImpl.WPWithinWrapperImpl('127.0.0.1', 8778, False)
     try:
         wpw.setup("kevingwp-pi", "Kevin Gordons Raspberry Pi - DEVICE SCANNER")
         wpwDevice = wpw.getDevice()
-        print "::" + wpwDevice.getUid() + ":" + wpwDevice.getName() + ":" + wpwDevice.getDescription() + ":" + str(wpwDevice.getServices()) + ":" + wpwDevice.getIpv4Address() + ":" + wpwDevice.getCurrencyCode()
+
+        deviceName = "Unimpl"
+        try:
+            deviceName = wpwDevice.getName()
+        except Exception:
+            print "Device name not yet implemented"
+            deviceName = "Unimpl"
+        if deviceName is None:
+            deviceName = "Unimpl"
+
+        print "::" + wpwDevice.getUid() + ":" + deviceName + ":" + wpwDevice.getDescription() + ":" + str(wpwDevice.getServices()) + ":" + wpwDevice.getIpv4Address() + ":" + wpwDevice.getCurrencyCode()
         print "Scanning network for devices now..."
         print "Will scan for " + str(flagScanTimeout) + " milliseconds\n"
 
@@ -60,9 +71,20 @@ def scanOnce():
                     print "------------------------------------------------------------"
                     print "Found " + str(len(devices)) + " devices\n"
 
+                    
+
                     for svcMsg in devices:
-                       print "[" + svcMsg.getServerId() + "] " + svcMsg.getDeviceDescription() + " @ " + svcMsg.getHostname() + ":" + str(svcMsg.getPortNumber()) + "" + svcMsg.getUrlPrefix() + "\n"					
-                       outputJson(svcMsg)
+                        deviceName2 = "Unimpl0"
+                        try:
+                            deviceName2 = svcMsg.getDeviceName()
+                        except Exception as e:
+                            print "Device name not yet implemented"
+                            print(str(e))
+                            deviceName2 = "Unimpl1"
+                        if deviceName2 is None:
+                            deviceName2 = "Unimpl2"
+                        print "DeviceName:[" + deviceName2 + "] [" + svcMsg.getServerId() + "] " + svcMsg.getDeviceDescription() + " @ " + svcMsg.getHostname() + ":" + str(svcMsg.getPortNumber()) + "" + svcMsg.getUrlPrefix() + "\n"					
+                        outputJson(svcMsg)
 
                     print "------------------------------------------------------------"
                 else:
