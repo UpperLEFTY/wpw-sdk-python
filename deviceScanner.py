@@ -13,6 +13,17 @@ def killRpcAgent():
     # Finding the process based on the port number is safer than relying on the pid number that it was started on
     os.system(killCommand)
 
+def connectToDevice(svcMsg): # throws WPWithinGeneralException {
+    card = WWTypes.WWHCECard()
+    card.setFirstName("Bilbo")
+    card.setLastName("Baggins")
+    card.setCardNumber("5555555555554444")
+    card.setExpMonth(11)
+    card.setExpYear(2018)
+    card.setType("Card")
+    card.setCvc("113")
+    wpw.initConsumer("http://", svcMsg.getHostname(), svcMsg.getPortNumber(), svcMsg.getUrlPrefix(), svcMsg.getServerId(), card, {"psp_name":"worldpayonlinepayments","api_endpoint":"https://api.worldpay.com/v1"})
+
 def resetJson():
     data3 = []
     try:
@@ -21,7 +32,7 @@ def resetJson():
     except Exception:
         print "You need to configure the webserver path if you want to output json"
 
-def outputJson(svcMsg):
+def outputJson(svcMsg, numberOfServices):
     global data2
     data2 = data2 + [{    'serverid' : svcMsg.getServerId(),
                             'devicename' :svcMsg.getDeviceName(),
@@ -29,6 +40,7 @@ def outputJson(svcMsg):
                             'hostname' : svcMsg.getHostname(),
                             'portnumber' : svcMsg.getPortNumber(),
                             'urlprefix' : svcMsg.getUrlPrefix(),
+                            'numberofservices' : numberOfServices,
                             }]
     try:
         with open('/Library/WebServer/Documents/worldpaywithin/device-scanner.json', 'w') as outfile:
@@ -74,6 +86,11 @@ def scanOnce():
                     
 
                     for svcMsg in devices:
+
+                        connectToDevice(svcMsg)
+                        svcDetails = wpw.requestServices()
+                        numberOfServices = len(svcDetails)
+
                         deviceName2 = "Unimpl0"
                         try:
                             deviceName2 = svcMsg.getDeviceName()
@@ -83,8 +100,8 @@ def scanOnce():
                             deviceName2 = "Unimpl1"
                         if deviceName2 is None:
                             deviceName2 = "Unimpl2"
-                        print "DeviceName:[" + deviceName2 + "] [" + svcMsg.getServerId() + "] " + svcMsg.getDeviceDescription() + " @ " + svcMsg.getHostname() + ":" + str(svcMsg.getPortNumber()) + "" + svcMsg.getUrlPrefix() + "\n"					
-                        outputJson(svcMsg)
+                        print "DeviceName:[" + deviceName2 + "] no-of-services:[" + str(numberOfServices) + "] [" + svcMsg.getServerId() + "] " + svcMsg.getDeviceDescription() + " @ " + svcMsg.getHostname() + ":" + str(svcMsg.getPortNumber()) + "" + svcMsg.getUrlPrefix() + "\n"					
+                        outputJson(svcMsg, numberOfServices)
 
                     print "------------------------------------------------------------"
                 else:
