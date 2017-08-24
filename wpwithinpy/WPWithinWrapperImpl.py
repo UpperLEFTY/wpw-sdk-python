@@ -43,7 +43,8 @@ class WPWithinWrapperImpl(object):
 		    self.cachedClient = self.openRpcListener()
 
     def startRpc(self, ipAddress, port, eventListenerPort):
-		if(self.rpcRunning == False):
+        self.killRpcAgent()
+        if(self.rpcRunning == False):
 			logging.info("Starting Port: " + str(port))
 			process = rpc.startRPC(ipAddress, port, eventListenerPort)
 			self.rpcRunning = True
