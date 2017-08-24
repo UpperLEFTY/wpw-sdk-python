@@ -72,8 +72,9 @@
       statusHtml = "<table><tbody>"
       for(i=0; i<obj.length; i++) {
           statusHtml += "<tr>";
-          statusHtml += "<td>" + obj[i].serverid + "</td>";
+          statusHtml += "<td>" + obj[i].devicename + "</td>";
           statusHtml += "<td>" + obj[i].devicedescription + "</td>";
+          statusHtml += "<td>" + obj[i].serverid + "</td>";
           statusHtml += "<td>" + obj[i].hostname + "</td>";
           statusHtml += "<td>" + obj[i].portnumber + "</td>";
           statusHtml += "<td>" + obj[i].urlprefix + "</td>";
