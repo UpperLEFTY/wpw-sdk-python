@@ -80,7 +80,7 @@ def getServicePriceQuote(serviceId, numberOfUnits, priceId): # throws WPWithinGe
         print "Result of select service is None"
     return tpr
 
-def purchaseService(serviceId, pReq): # throws WPWithinGeneralException {
+def purchaseService(serviceId, pReq, numberOfUnits): # throws WPWithinGeneralException {
     pResp = wpw.makePayment(pReq)
     sdt = pResp.getServiceDeliveryToken()
     if pResp != None:
@@ -92,7 +92,7 @@ def purchaseService(serviceId, pReq): # throws WPWithinGeneralException {
             print "ServiceDeliveryToken.key: %{0}\n".format(sdt.getKey())
             print "ServiceDeliveryToken.signature: {0}\n".format(sdt.getSignature())
             print "ServiceDeliveryToken.refundOnExpiry: {0}\n".format(sdt.getRefundOnExpiry())
-            beginServiceDelivery(serviceId, sdt, 5)
+            beginServiceDelivery(serviceId, sdt, numberOfUnits)
     else:
         print 'Result of make payment is None..'
     return pResp
@@ -214,8 +214,13 @@ def run():
                                                             print "[" + str(len(svcPrices)) +"] service prices received"
                                                             for svcPrice in svcPrices:
                                                                 
+                                                                howManyUnits = 6
+                                                                howManyUnitsInput = raw_input("howManyUnits=[" + str(howManyUnits) + "] change or enter to leave unchanged: ")
+                                                                if howManyUnitsInput != "":
+                                                                    howManyUnits = int(howManyUnitsInput)
+
                                                                 #Select the first price in the list
-                                                                tpr = getServicePriceQuote(svcDetail.getServiceId(), 6, svcPrice.getId())
+                                                                tpr = getServicePriceQuote(svcDetail.getServiceId(), howManyUnits, svcPrice.getId())
                                                                 print 'Client ID: {0}\n'.format(tpr.getClientId())
                                                                 print 'Server ID: {0}\n'.format(tpr.getServerId())
 
@@ -223,7 +228,7 @@ def run():
                                                                 if("Y" != confirm and "y" != confirm and "YES" != confirm and "yes" != confirm and "Yes" != confirm):
                                                                     print "Okay skipping this payment"
                                                                 elif("Y" == confirm or "y" == confirm or "YES" == confirm or "yes" == confirm or "Yes" == confirm):
-                                                                    paymentResponse = purchaseService(svcDetail.getServiceId(), tpr)
+                                                                    paymentResponse = purchaseService(svcDetail.getServiceId(), tpr, howManyUnits)
                                                                     confirm = raw_input("Payment completed successfully' - any key to continue")
                     confirm = raw_input("Flow complete' - any key to exit")
                     killTheRpcAgent()
