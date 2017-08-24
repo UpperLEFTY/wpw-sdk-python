@@ -636,6 +636,7 @@ class ServiceMessage(object):
      - serverId
      - urlPrefix
      - scheme
+     - deviceName
     """
 
     thrift_spec = (
@@ -646,15 +647,17 @@ class ServiceMessage(object):
         (4, TType.STRING, 'serverId', 'UTF8', None, ),  # 4
         (5, TType.STRING, 'urlPrefix', 'UTF8', None, ),  # 5
         (6, TType.STRING, 'scheme', 'UTF8', None, ),  # 6
+        (7, TType.STRING, 'deviceName', 'UTF8', None, ),  # 7
     )
 
-    def __init__(self, deviceDescription=None, hostname=None, portNumber=None, serverId=None, urlPrefix=None, scheme=None,):
+    def __init__(self, deviceDescription=None, hostname=None, portNumber=None, serverId=None, urlPrefix=None, scheme=None, deviceName=None,):
         self.deviceDescription = deviceDescription
         self.hostname = hostname
         self.portNumber = portNumber
         self.serverId = serverId
         self.urlPrefix = urlPrefix
         self.scheme = scheme
+        self.deviceName = deviceName
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -695,6 +698,11 @@ class ServiceMessage(object):
                     self.scheme = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
+            elif fid == 7:
+                if ftype == TType.STRING:
+                    self.deviceName = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -728,6 +736,10 @@ class ServiceMessage(object):
         if self.scheme is not None:
             oprot.writeFieldBegin('scheme', TType.STRING, 6)
             oprot.writeString(self.scheme.encode('utf-8') if sys.version_info[0] == 2 else self.scheme)
+            oprot.writeFieldEnd()
+        if self.deviceName is not None:
+            oprot.writeFieldBegin('deviceName', TType.STRING, 7)
+            oprot.writeString(self.deviceName.encode('utf-8') if sys.version_info[0] == 2 else self.deviceName)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()

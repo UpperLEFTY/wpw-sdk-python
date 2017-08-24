@@ -61,7 +61,7 @@ def convertWWServiceDeliveryToken(wwServiceDeliveryToken):
 
 def convertWWServiceMesage(wwServiceMessage):
 	logging.info('convertWWServiceMessage')
-	return ServiceMessage(deviceDescription=wwServiceMessage.getDeviceDescription(), hostname=wwServiceMessage.getHostname(), portNumber=wwServiceMessage.getServiceMessage(), serverId=wwServiceMessage.getServerId(), urlPrefix=wwServiceMessage.getUrlPrefix())
+	return ServiceMessage(deviceDescription=wwServiceMessage.getDeviceDescription(), hostname=wwServiceMessage.getHostname(), portNumber=wwServiceMessage.getServiceMessage(), serverId=wwServiceMessage.getServerId(), urlPrefix=wwServiceMessage.getUrlPrefix(), scheme=wwServiceMessage.getScheme(), deviceName=wwServiceMessage.getDeviceName(),)
 
 def convertWWTotalPriceResponse(wwTotalPriceResponse):
 	logging.info('convertWWTotalPriceResponse')
@@ -159,6 +159,7 @@ def convertServiceDetails(serviceDetails):
 def convertServiceMessage(serviceMessage):
     logging.info('convertServiceMessage')
     wwServiceMessage = WWTypes.WWServiceMessage()
+    wwServiceMessage.setDeviceName(serviceMessage.deviceName)
     wwServiceMessage.setDeviceDescription(serviceMessage.deviceDescription)
     wwServiceMessage.setHostname(serviceMessage.hostname)
     wwServiceMessage.setPortNumber(serviceMessage.portNumber)
