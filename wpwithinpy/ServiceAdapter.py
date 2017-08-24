@@ -159,14 +159,7 @@ def convertServiceDetails(serviceDetails):
 def convertServiceMessage(serviceMessage):
     logging.info('convertServiceMessage')
     wwServiceMessage = WWTypes.WWServiceMessage()
-    try:
-    	if serviceMessage.deviceName != nil:
-    		wwServiceMessage.setDeviceName(serviceMessage.deviceName)
-    	else:
-    		wwServiceMessage.setDeviceName("DEF1")
-    except Exception:
-        print "Producer not yet implemented deviceName in svcMsg datatype"
-        wwServiceMessage.setDeviceName("DEF2")
+    wwServiceMessage.setDeviceName(serviceMessage.deviceName)
     wwServiceMessage.setDeviceDescription(serviceMessage.deviceDescription)
     wwServiceMessage.setHostname(serviceMessage.hostname)
     wwServiceMessage.setPortNumber(serviceMessage.portNumber)
