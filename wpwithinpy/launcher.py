@@ -67,7 +67,7 @@ class launcher(object):
                 out = 'amd64'
         else:
             if out == 'arm':
-                out += '64'
+                out += '32'
             else:
                 out = '386'
         return out
