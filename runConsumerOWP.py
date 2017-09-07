@@ -2,6 +2,8 @@ import wpwithinpy.WPWithinWrapperImpl as WPWithinWrapperImpl
 import wpwithinpy.WWTypes as WWTypes
 import time
 import os
+import signal
+
 
 def killTheRpcAgent():
     print "Will attempt to kill the rpc-agent - this will now be handled by the SDK"
@@ -101,12 +103,12 @@ def beginServiceDelivery(serviceID, token, unitsToSupply): # throws WPWithinGene
     else:
         print "Token not empty at runConsumer side"
     wpw.beginServiceDelivery(serviceID, token, unitsToSupply)
+    print 'Sleeping 10 seconds..'
     try:
-        print 'Sleeping 10 seconds..'
         time.sleep(10)
-        endServiceDelivery(serviceID, token, unitsToSupply)
-    except InterruptedException as e:
-        print e
+    except IOError:
+        pass
+    endServiceDelivery(serviceID, token, unitsToSupply)
 
 def endServiceDelivery(serviceID, token, unitsReceived): # throws WPWithinGeneralException {
     print 'Calling endServiceDelivery()'
@@ -122,7 +124,7 @@ def run():
         print "::" + wpwDevice.getUid() + ":" + wpwDevice.getName() + ":" + wpwDevice.getDescription() + ":" + str(wpwDevice.getServices()) + ":" + wpwDevice.getIpv4Address() + ":" + wpwDevice.getCurrencyCode()
         if wpwDevice != None:
             print "Successfully got a device"
-            devices = discoverDevices()    
+            devices = discoverDevices()
             if devices != None:
                 onlyRunOnce = 0
                 for svcMsg in devices:
@@ -154,10 +156,9 @@ def run():
             print "Could not get device"
         wpw.stopRPCAgent()
     except WWTypes.WPWithinGeneralException as wpge:
-        killTheRpcAgent()
+        # killTheRpcAgent()
         print wpge
     except Exception as wpge2:
-        killTheRpcAgent()
+        # killTheRpcAgent()
         print wpge2
-        
 run()

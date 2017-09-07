@@ -16,12 +16,18 @@ from thrift.protocol import TBinaryProtocol
 import WWTypes
 import logging
 import os
+import socket
+import errno
+import signal
+
+
 
 class WPWithinWrapperImpl(object):
     cachedClient = None
     logging.basicConfig(filename='worldpay-within-wrapper.log',level=logging.DEBUG)
 
     def __init__(self, ipAddress, portNumber, startRpcCallbackAgent=False, wpWithinEventListener=None, eventListenerPort=0):
+        signal.signal(signal.SIGINT, self.signal_handler)
         self.portNumber = portNumber
         self.ipAddress = ipAddress
         self.eventListenerPort = eventListenerPort
@@ -33,17 +39,16 @@ class WPWithinWrapperImpl(object):
         self.rpcProcess = self.startRpc(self.ipAddress, self.portNumber, self.eventListenerPort)
         self.setClientIfNotSet()
 
+
     def killRpcAgent(self):
-        killCommand = "ps aux | grep -i 'rpc-agent.*port.*" + str(self.portNumber) + "' | awk '{print $2}' | xargs kill -9"
-        # Finding the process based on the port number is safer than relying on the pid number that it was started on
-        os.system(killCommand)
+        self.rpcProcess.kill()
 
     def setClientIfNotSet(self):
 		if self.cachedClient == None:
 		    self.cachedClient = self.openRpcListener()
 
     def startRpc(self, ipAddress, port, eventListenerPort):
-        self.killRpcAgent()
+        # self.killRpcAgent()
         if(self.rpcRunning == False):
 			logging.info("Starting Port: " + str(port))
 			process = rpc.startRPC(ipAddress, port, eventListenerPort)
@@ -120,14 +125,26 @@ class WPWithinWrapperImpl(object):
             self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Get device in wrapper failed", e)                     
 
+
     def stopRPCAgent(self):
         logging.info('SHOULD STOP RPC AGENT')
         try:
-            self.rpcProcess.kill()
-        except Exception as e: 
-            logging.info("Could not stop the RPC service: " + str(e))
+            self.getClient().CloseRPCAgent()
+        except socket.error as er:
+            time.sleep(2)
+            if self.rpcProcess.poll() is not None:
+                logging.info("RPC agent closed.")
+            else:
+                self.killRpcAgent()
+                raise WWTypes.WPWithinGeneralException("RPC process killed.", er)
+        except Exception as e:
             self.killRpcAgent()
-            raise WWTypes.WPWithinGeneralException("Could not stop the RPC service", e)                     
+            raise WWTypes.WPWithinGeneralException("RPC process killed.", e)
+
+    def signal_handler(self, signum, frame):
+        print "You pressed ctrl + c"
+        self.stopRPCAgent()
+
 
     def deviceDiscovery(self, timeout):
         logging.info('STARTING DO DEVICE DISCOVERY')
@@ -170,7 +187,7 @@ class WPWithinWrapperImpl(object):
     def stopServiceBroadcast(self):
         try:
             self.getClient().stopServiceBroadcast()
-        except WPWithinGeneralException as e:
+        except WWTypes.WPWithinGeneralException as e:
             self.killRpcAgent()
             print "Stop service broadcast failed: " + e
         except Exception:
@@ -188,7 +205,7 @@ class WPWithinWrapperImpl(object):
     def selectService(self, serviceId, numberOfUnits, priceId):
     	try:
     	    return ServiceAdapter.convertTotalPriceResponse(self.getClient().selectService(serviceId, numberOfUnits, priceId))		
-    	except WPWithinGeneralException as e:
+    	except WWTypes.WPWithinGeneralException as e:
             self.killRpcAgent()
      	    print "Select service failed in wrapper: " + e
         except Exception:
