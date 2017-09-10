@@ -18,7 +18,7 @@ logging.basicConfig(filename='worldpay-within-wrapper.log',level=logging.DEBUG)
 
 def convertWWHCECard(wwHceCard):
 	logging.info('convertWWHCECard')
-	return HCECard(FirstName=wwHceCard.getFirstName(), LastName=wwHceCard.getLastName(), ExpMonth=wwHceCard.getExpMonth(), ExpYear=wwHceCard.getExpYear(), CardNumber=wwHceCard.getCardNumber(), Type=wwHceCard.getType(), Cvc=wwHceCard.getCvc())
+	return HCECard(firstName=wwHceCard.getFirstName(), lastName=wwHceCard.getLastName(), expMonth=wwHceCard.getExpMonth(), expYear=wwHceCard.getExpYear(), cardNumber=wwHceCard.getCardNumber(), type=wwHceCard.getType(), cvc=wwHceCard.getCvc())
 
 def convertWWDevice(wwDevice):
 	logging.info('convertWWDevice')
@@ -26,7 +26,7 @@ def convertWWDevice(wwDevice):
 
 def convertWWPaymentResponse(wwPaymentResponse):
 	logging.info('convertWWPaymentResponse')
-	return paymentResponse(serverId=wwPaymentResponse.getServerId(), clientId=wwPaymentResponse.getClientId(), totalPaid=wwPaymentResponse.getTotalPaid(), serviceDeliveryToken=convertWWServiceDeliveryToken(wwPaymentResponse.getServiceDeliveryToken()))
+	return PaymentResponse(serverId=wwPaymentResponse.getServerId(), clientId=wwPaymentResponse.getClientId(), totalPaid=wwPaymentResponse.getTotalPaid(), serviceDeliveryToken=convertWWServiceDeliveryToken(wwPaymentResponse.getServiceDeliveryToken()))
 
 def convertWWPricePerUnit(wwPricePerUnit):
 	logging.info('convertWWPricePerUnit')
@@ -69,7 +69,7 @@ def convertWWTotalPriceResponse(wwTotalPriceResponse):
 
 def convertHCECard(hceCard):
 	logging.info('convertHCECard')
-	wwHceCard = WWTypes.WWHceCard()
+	wwHceCard = WWTypes.WWHCECard()
 	wwHceCard.setFirstName(hceCard.firstName)
 	wwHceCard.setLastName(hceCard.lastName)
 	wwHceCard.setExpMonth(hceCard.expMonth)
@@ -127,8 +127,8 @@ def convertPricePerUnit(pricePerUnit):
 def convertService(service):
 	logging.info('convertService')
 	wwService = WWTypes.WWService()
-	wwService.setServerId(service.serverId)
-	wwService.setServiceDescription(service.setServiceDescription)
+	wwService.setId(service.serverId)
+	wwService.setDescription(service.setServiceDescription)
 	return wwService
 
 def convertServiceDeliveryToken(serviceDeliveryToken):

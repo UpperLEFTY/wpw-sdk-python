@@ -367,34 +367,34 @@ class Service(object):
 class HCECard(object):
     """
     Attributes:
-     - FirstName
-     - LastName
-     - ExpMonth
-     - ExpYear
-     - CardNumber
-     - Type
-     - Cvc
+     - firstName
+     - lastName
+     - expMonth
+     - expYear
+     - cardNumber
+     - type
+     - cvc
     """
 
     thrift_spec = (
         None,  # 0
-        (1, TType.STRING, 'FirstName', 'UTF8', None, ),  # 1
-        (2, TType.STRING, 'LastName', 'UTF8', None, ),  # 2
-        (3, TType.I32, 'ExpMonth', None, None, ),  # 3
-        (4, TType.I32, 'ExpYear', None, None, ),  # 4
-        (5, TType.STRING, 'CardNumber', 'UTF8', None, ),  # 5
-        (6, TType.STRING, 'Type', 'UTF8', None, ),  # 6
-        (7, TType.STRING, 'Cvc', 'UTF8', None, ),  # 7
+        (1, TType.STRING, 'firstName', 'UTF8', None, ),  # 1
+        (2, TType.STRING, 'lastName', 'UTF8', None, ),  # 2
+        (3, TType.I32, 'expMonth', None, None, ),  # 3
+        (4, TType.I32, 'expYear', None, None, ),  # 4
+        (5, TType.STRING, 'cardNumber', 'UTF8', None, ),  # 5
+        (6, TType.STRING, 'type', 'UTF8', None, ),  # 6
+        (7, TType.STRING, 'cvc', 'UTF8', None, ),  # 7
     )
 
-    def __init__(self, FirstName=None, LastName=None, ExpMonth=None, ExpYear=None, CardNumber=None, Type=None, Cvc=None,):
-        self.FirstName = FirstName
-        self.LastName = LastName
-        self.ExpMonth = ExpMonth
-        self.ExpYear = ExpYear
-        self.CardNumber = CardNumber
-        self.Type = Type
-        self.Cvc = Cvc
+    def __init__(self, firstName=None, lastName=None, expMonth=None, expYear=None, cardNumber=None, type=None, cvc=None,):
+        self.firstName = firstName
+        self.lastName = lastName
+        self.expMonth = expMonth
+        self.expYear = expYear
+        self.cardNumber = cardNumber
+        self.type = type
+        self.cvc = cvc
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -407,37 +407,37 @@ class HCECard(object):
                 break
             if fid == 1:
                 if ftype == TType.STRING:
-                    self.FirstName = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.firstName = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRING:
-                    self.LastName = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.lastName = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.I32:
-                    self.ExpMonth = iprot.readI32()
+                    self.expMonth = iprot.readI32()
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.I32:
-                    self.ExpYear = iprot.readI32()
+                    self.expYear = iprot.readI32()
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
                 if ftype == TType.STRING:
-                    self.CardNumber = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.cardNumber = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             elif fid == 6:
                 if ftype == TType.STRING:
-                    self.Type = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.type = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             elif fid == 7:
                 if ftype == TType.STRING:
-                    self.Cvc = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.cvc = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             else:
@@ -450,33 +450,33 @@ class HCECard(object):
             oprot.trans.write(oprot._fast_encode(self, (self.__class__, self.thrift_spec)))
             return
         oprot.writeStructBegin('HCECard')
-        if self.FirstName is not None:
-            oprot.writeFieldBegin('FirstName', TType.STRING, 1)
-            oprot.writeString(self.FirstName.encode('utf-8') if sys.version_info[0] == 2 else self.FirstName)
+        if self.firstName is not None:
+            oprot.writeFieldBegin('firstName', TType.STRING, 1)
+            oprot.writeString(self.firstName.encode('utf-8') if sys.version_info[0] == 2 else self.firstName)
             oprot.writeFieldEnd()
-        if self.LastName is not None:
-            oprot.writeFieldBegin('LastName', TType.STRING, 2)
-            oprot.writeString(self.LastName.encode('utf-8') if sys.version_info[0] == 2 else self.LastName)
+        if self.lastName is not None:
+            oprot.writeFieldBegin('lastName', TType.STRING, 2)
+            oprot.writeString(self.lastName.encode('utf-8') if sys.version_info[0] == 2 else self.lastName)
             oprot.writeFieldEnd()
-        if self.ExpMonth is not None:
-            oprot.writeFieldBegin('ExpMonth', TType.I32, 3)
-            oprot.writeI32(self.ExpMonth)
+        if self.expMonth is not None:
+            oprot.writeFieldBegin('expMonth', TType.I32, 3)
+            oprot.writeI32(self.expMonth)
             oprot.writeFieldEnd()
-        if self.ExpYear is not None:
-            oprot.writeFieldBegin('ExpYear', TType.I32, 4)
-            oprot.writeI32(self.ExpYear)
+        if self.expYear is not None:
+            oprot.writeFieldBegin('expYear', TType.I32, 4)
+            oprot.writeI32(self.expYear)
             oprot.writeFieldEnd()
-        if self.CardNumber is not None:
-            oprot.writeFieldBegin('CardNumber', TType.STRING, 5)
-            oprot.writeString(self.CardNumber.encode('utf-8') if sys.version_info[0] == 2 else self.CardNumber)
+        if self.cardNumber is not None:
+            oprot.writeFieldBegin('cardNumber', TType.STRING, 5)
+            oprot.writeString(self.cardNumber.encode('utf-8') if sys.version_info[0] == 2 else self.cardNumber)
             oprot.writeFieldEnd()
-        if self.Type is not None:
-            oprot.writeFieldBegin('Type', TType.STRING, 6)
-            oprot.writeString(self.Type.encode('utf-8') if sys.version_info[0] == 2 else self.Type)
+        if self.type is not None:
+            oprot.writeFieldBegin('type', TType.STRING, 6)
+            oprot.writeString(self.type.encode('utf-8') if sys.version_info[0] == 2 else self.type)
             oprot.writeFieldEnd()
-        if self.Cvc is not None:
-            oprot.writeFieldBegin('Cvc', TType.STRING, 7)
-            oprot.writeString(self.Cvc.encode('utf-8') if sys.version_info[0] == 2 else self.Cvc)
+        if self.cvc is not None:
+            oprot.writeFieldBegin('cvc', TType.STRING, 7)
+            oprot.writeString(self.cvc.encode('utf-8') if sys.version_info[0] == 2 else self.cvc)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -764,17 +764,20 @@ class ServiceDetails(object):
     Attributes:
      - serviceId
      - serviceDescription
+     - serviceName
     """
 
     thrift_spec = (
         None,  # 0
         (1, TType.I32, 'serviceId', None, None, ),  # 1
         (2, TType.STRING, 'serviceDescription', 'UTF8', None, ),  # 2
+        (3, TType.STRING, 'serviceName', 'UTF8', None, ),  # 3
     )
 
-    def __init__(self, serviceId=None, serviceDescription=None,):
+    def __init__(self, serviceId=None, serviceDescription=None, serviceName=None,):
         self.serviceId = serviceId
         self.serviceDescription = serviceDescription
+        self.serviceName = serviceName
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -795,6 +798,11 @@ class ServiceDetails(object):
                     self.serviceDescription = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
+            elif fid == 3:
+                if ftype == TType.STRING:
+                    self.serviceName = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -812,6 +820,10 @@ class ServiceDetails(object):
         if self.serviceDescription is not None:
             oprot.writeFieldBegin('serviceDescription', TType.STRING, 2)
             oprot.writeString(self.serviceDescription.encode('utf-8') if sys.version_info[0] == 2 else self.serviceDescription)
+            oprot.writeFieldEnd()
+        if self.serviceName is not None:
+            oprot.writeFieldBegin('serviceName', TType.STRING, 3)
+            oprot.writeString(self.serviceName.encode('utf-8') if sys.version_info[0] == 2 else self.serviceName)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
