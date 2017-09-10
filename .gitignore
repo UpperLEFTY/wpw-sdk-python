@@ -1,3 +1,14 @@
+# python related
+__pycache__/
+*.py[cod]
+*$py.class
+
+# log files
+*.log
+
+# dev IDE files
+.idea/
+
 .DS_Store
 dist
 build
