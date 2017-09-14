@@ -76,7 +76,7 @@ class launcher(object):
     #Make it a thread!    
     def launchDarwin(self, path, flags):
         logging.info("launching Darwin application")
-        cmd = '/wpwithinpy/iot-core-component/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
+        cmd = '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
         if flags == None:
             cmd = path + cmd + ""
         else:
@@ -88,7 +88,7 @@ class launcher(object):
     
     def launchLinux(self, path, flags):
         logging.info("launching Linux application")
-        cmd = '/wpwithinpy/iot-core-component/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
+        cmd = '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
         if flags == None:
             cmd = path + cmd + ""
         else:
@@ -100,7 +100,7 @@ class launcher(object):
         
     def launchWindows(self, path, flags):
         logging.info("launching Windows application")
-        cmd = '/wpwithinpy/iot-core-component/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
+        cmd = '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
         if flags == None:
             cmd = path + cmd + ""
         else:
