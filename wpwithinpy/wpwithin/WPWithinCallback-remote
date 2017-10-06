@@ -24,8 +24,13 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
     print('Usage: ' + sys.argv[0] + ' [-h host[:port]] [-u url] [-f[ramed]] [-s[sl]] [-novalidate] [-ca_certs certs] [-keyfile keyfile] [-certfile certfile] function [arg1 [arg2...]]')
     print('')
     print('Functions:')
-    print('  void beginServiceDelivery(i32 serviceID, ServiceDeliveryToken serviceDeliveryToken, i32 unitsToSupply)')
+    print('  void beginServiceDelivery(i32 serviceID, i32 servicePriceID, ServiceDeliveryToken serviceDeliveryToken, i32 unitsToSupply)')
     print('  void endServiceDelivery(i32 serviceID, ServiceDeliveryToken serviceDeliveryToken, i32 unitsReceived)')
+    print('  void makePaymentEvent(i32 totalPrice, string orderCurrency, string clientToken, string orderDescription, string uuid)')
+    print('  void serviceDiscoveryEvent(string remoteAddr)')
+    print('  void servicePricesEvent(string remoteAddr, i32 serviceId)')
+    print('  void serviceTotalPriceEvent(string remoteAddr, i32 serviceID, TotalPriceResponse totalPriceResp)')
+    print('  void errorEvent(string msg)')
     print('')
     sys.exit(0)
 
@@ -106,16 +111,46 @@ client = WPWithinCallback.Client(protocol)
 transport.open()
 
 if cmd == 'beginServiceDelivery':
-    if len(args) != 3:
-        print('beginServiceDelivery requires 3 args')
+    if len(args) != 4:
+        print('beginServiceDelivery requires 4 args')
         sys.exit(1)
-    pp.pprint(client.beginServiceDelivery(eval(args[0]), eval(args[1]), eval(args[2]),))
+    pp.pprint(client.beginServiceDelivery(eval(args[0]), eval(args[1]), eval(args[2]), eval(args[3]),))
 
 elif cmd == 'endServiceDelivery':
     if len(args) != 3:
         print('endServiceDelivery requires 3 args')
         sys.exit(1)
     pp.pprint(client.endServiceDelivery(eval(args[0]), eval(args[1]), eval(args[2]),))
+
+elif cmd == 'makePaymentEvent':
+    if len(args) != 5:
+        print('makePaymentEvent requires 5 args')
+        sys.exit(1)
+    pp.pprint(client.makePaymentEvent(eval(args[0]), args[1], args[2], args[3], args[4],))
+
+elif cmd == 'serviceDiscoveryEvent':
+    if len(args) != 1:
+        print('serviceDiscoveryEvent requires 1 args')
+        sys.exit(1)
+    pp.pprint(client.serviceDiscoveryEvent(args[0],))
+
+elif cmd == 'servicePricesEvent':
+    if len(args) != 2:
+        print('servicePricesEvent requires 2 args')
+        sys.exit(1)
+    pp.pprint(client.servicePricesEvent(args[0], eval(args[1]),))
+
+elif cmd == 'serviceTotalPriceEvent':
+    if len(args) != 3:
+        print('serviceTotalPriceEvent requires 3 args')
+        sys.exit(1)
+    pp.pprint(client.serviceTotalPriceEvent(args[0], eval(args[1]), eval(args[2]),))
+
+elif cmd == 'errorEvent':
+    if len(args) != 1:
+        print('errorEvent requires 1 args')
+        sys.exit(1)
+    pp.pprint(client.errorEvent(args[0],))
 
 else:
     print('Unrecognized method %s' % cmd)

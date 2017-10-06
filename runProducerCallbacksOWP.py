@@ -8,10 +8,11 @@ class TheEventListener():
     def __init__(self):
         print "Inialised custom event listener"
 
-    def beginServiceDelivery(self, serviceId, serviceDeliveryToken, unitsToSupply):
+    def beginServiceDelivery(self, serviceId, servicePriceID, serviceDeliveryToken, unitsToSupply):
         try:
             print "OVERRIDE: event from core - onBeginServiceDelivery()"
             print "ServiceID: {0}\n".format(serviceId)
+            print "ServicePriceID: {0}\n".format(servicePriceID)
             print "UnitsToSupply: {0}\n".format(unitsToSupply)
             print "SDT.Key: {0}\n".format(serviceDeliveryToken.key)
             print "SDT.Expiry: {0}\n".format(serviceDeliveryToken.expiry)
@@ -33,6 +34,48 @@ class TheEventListener():
             print "SDT.RefundOnExpiry: {0}\n".format(serviceDeliveryToken.refundOnExpiry)
         except Exception as e:
             print "doEndServiceDelivery failed: " + str(e)
+
+    def makePaymentEvent(self, totalPrice, orderCurrency, clientToken, orderDescription, uuid):
+        try:
+            print "event from core - onMakePaymentEvent()"
+            print "totalPrice: {0}\n".format(totalPrice)
+            print "orderCurrency: {0}\n".format(orderCurrency)
+            print "clientToken: {0}\n".format(clientToken)
+            print "orderDescription: {0}\n".format(orderDescription)
+            print "uuid: {0}\n".format(uuid)
+        except Exception as e:
+            print "onMakePaymentEvent failed: " + str(e)
+
+    def serviceDiscoveryEvent(self, remoteAddr):
+        try:
+            print "event from core - onServiceDiscoveryEvent()"
+            print "remoteAddr: {0}\n".format(remoteAddr)
+        except Exception as e:
+            print "onServiceDiscoveryEvent failed: " + str(e)
+
+    def servicePricesEvent(self, remoteAddr, serviceId):
+        try:
+            print "event from core - onServicePricesEvent()"
+            print "remoteAddr: {0}\n".format(remoteAddr)
+            print "serviceId: {0}\n".format(serviceId)
+        except Exception as e:
+            print "onServicePricesEvent failed: " + str(e)
+
+    def serviceTotalPriceEvent(self, remoteAddr, serviceID, totalPriceResp):
+        try:
+            print "event from core - onServiceTotalPriceEvent()"
+            print "remoteAddr: {0}\n".format(remoteAddr)
+            print "serviceId: {0}\n".format(serviceID)
+            print "totalPriceResp: {0}\n".format(totalPriceResp)
+        except Exception as e:
+            print "onServiceTotalPriceEvent failed: " + str(e)
+
+    def errorEvent(self, msg):
+        try:
+            print "event from core - onErrorEvent()"
+            print "msg: {0}\n".format(msg)
+        except Exception as e:
+            print "onErrorEvent failed: " + str(e)
 
 
 def run():
