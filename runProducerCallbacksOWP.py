@@ -1,7 +1,7 @@
 from wpwithinpy import WPWithinWrapperImpl
 from wpwithinpy import WWTypes
 import time
-
+import jsoncfg
 
 
 class TheEventListener():
@@ -82,11 +82,16 @@ def run():
     try:
         print "WorldpayWithin Sample Producer (with callbacks)..."
         global wpw
+        global config
+
+        print "Load configuration."
+        config = jsoncfg.load_config('config/producerCallbacksOWP.json')
+
         wpWithinEventListener = TheEventListener()
         # add listeners to the events
         # wpWithinEventListener.onBeginServiceDelivery += doBeginServiceDelivery
         # wpWithinEventListener.onEndServiceDelivery += doEndServiceDelivery		
-        wpw = WPWithinWrapperImpl.WPWithinWrapperImpl('127.0.0.1', 9055, True, wpWithinEventListener, 9095)
+        wpw = WPWithinWrapperImpl.WPWithinWrapperImpl(config.host(), config.port(), True, wpWithinEventListener, 9095)
         wpw.setup("Producer Example", "Example WorldpayWithin producer")		
         svc = WWTypes.WWService();
         svc.setName("Car charger")
@@ -105,7 +110,7 @@ def run():
         prices[ccPrice.getId()] = ccPrice
         svc.setPrices(prices)
         # [ CLIENT KEY, SERVICE KEY] : From online.worldpay.com
-        wpw.initProducer({"psp_name":"worldpayonlinepayments","hte_public_key":"T_C_97e8cbaa-14e0-4b1c-b2af-469daf8f1356", "hte_private_key": "T_S_3bdadc9c-54e0-4587-8d91-29813060fecd", "api_endpoint":"https://api.worldpay.com/v1", "merchant_client_key": "T_C_97e8cbaa-14e0-4b1c-b2af-469daf8f1356", "merchant_service_key": "T_S_3bdadc9c-54e0-4587-8d91-29813060fecd"})
+        wpw.initProducer(config.pspConfig())
         wpw.addService(svc)
         broadcastDuration = 20000
         durationSeconds = broadcastDuration / 1000
