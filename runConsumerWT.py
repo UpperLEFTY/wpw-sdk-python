@@ -1,6 +1,7 @@
 from wpwithinpy import WPWithinWrapperImpl
 from wpwithinpy import WWTypes
 import time
+import jsoncfg
 
 
 def discoverDevices(): # throws WPWithinGeneralException {
@@ -24,14 +25,15 @@ def discoverDevices(): # throws WPWithinGeneralException {
 
 def connectToDevice(svcMsg): # throws WPWithinGeneralException {
     card = WWTypes.WWHCECard()
-    card.setFirstName("Joe")
-    card.setLastName("Bloggs")
-    card.setCardNumber("3434343434343434")
-    card.setExpMonth(12)
-    card.setExpYear(2020)
-    card.setType("Card")
-    card.setCvc("123")
-    wpw.initConsumer("http://", svcMsg.getHostname(), svcMsg.getPortNumber(), svcMsg.getUrlPrefix(), svcMsg.getServerId(), card, {"psp_name":"securenet","api_endpoint":"https://gwapi.demo.securenet.com/api/", "developer_id":"12345678", "app_version":"0.1"})
+    card.setFirstName(config.hceCard.firstName())
+    card.setLastName(config.hceCard.lastName())
+    card.setCardNumber(config.hceCard.cardNumber())
+    card.setExpMonth(config.hceCard.expMonth())
+    card.setExpYear(config.hceCard.expYear())
+    card.setType(config.hceCard.type())
+    card.setCvc(config.hceCard.cvc())
+
+    wpw.initConsumer("http://", svcMsg.getHostname(), svcMsg.getPortNumber(), svcMsg.getUrlPrefix(), svcMsg.getServerId(), card, config.pspConfig())
 
 def getAvailableServices(): #throws WPWithinGeneralException {
     services = wpw.requestServices()
@@ -111,7 +113,12 @@ def endServiceDelivery(serviceID, token, unitsReceived): # throws WPWithinGenera
 def run():
     print 'Starting Consumer Example Written in Python.'
     global wpw
-    wpw = WPWithinWrapperImpl.WPWithinWrapperImpl('127.0.0.1', 8778, False)
+    global config
+
+    print 'Load configuration.'
+    config = jsoncfg.load_config('config/consumerWT.json')
+
+    wpw = WPWithinWrapperImpl.WPWithinWrapperImpl(config.host(), config.port(), False)
     try:
         wpw.setup("my-device", "an example consumer device")
         wpwDevice = wpw.getDevice()

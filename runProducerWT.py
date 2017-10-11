@@ -2,6 +2,7 @@ from wpwithinpy import WPWithinWrapperImpl
 from wpwithinpy import WWTypes
 import time
 import os
+import jsoncfg
 
 # Handy method to kill any rpc-agent that still exists
 def clearDownRpc():
@@ -11,7 +12,12 @@ def run():
 	try:
 		print "WorldpayWithin Sample Producer..."
 		global wpw
-		wpw = WPWithinWrapperImpl.WPWithinWrapperImpl('127.0.0.1', 9090, False)
+		global config
+
+		print "Load configuration."
+		config = jsoncfg.load_config('config/producerWT.json')
+
+		wpw = WPWithinWrapperImpl.WPWithinWrapperImpl(config.host(), config.port(), False)
 		wpw.setup("Producer Example", "Example WorldpayWithin producer")		
 		svc = WWTypes.WWService();
 		svc.setName("Car charger")
@@ -31,7 +37,7 @@ def run():
 		svc.setPrices(prices)
 		print "WorldpayWithin Sample Producer: About to init the producer with crendentials"
 		# [ CLIENT KEY, SERVICE KEY] : From online.worldpay.com
-		wpw.initProducer({"psp_name":"securenet","developer_id":"12345678", "secure_key": "<secure_key>", "api_endpoint":"https://gwapi.demo.securenet.com/api/", "public_key": "<public_key>", "secure_net_id":"<secure_net_id>", "app_version":"0.1", "merchant_client_key": "<public_key>", "merchant_service_key": "<secure_key>","hte_public_key":"<public_key>", "hte_private_key": "<secure_key>"})
+		wpw.initProducer(config.pspConfig())
 		print "WorldpayWithin Sample Producer: Adding service"
 		wpw.addService(svc)
 		broadcastDuration = 20000
