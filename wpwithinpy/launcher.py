@@ -83,7 +83,7 @@ class launcher(object):
             cmd = path + cmd + " " + flags
         #ls_output=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         #ls_output=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        proc=subprocess.Popen(cmd, shell=True)
+        proc=subprocess.Popen(cmd)
         return proc
     
     def launchLinux(self, path, flags):
@@ -95,7 +95,7 @@ class launcher(object):
             cmd = path + cmd + " " + flags
         #ls_output=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         #ls_output=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        proc=subprocess.Popen(cmd, shell=True)
+        proc=subprocess.Popen(cmd)
         return proc
         
     def launchWindows(self, path, flags):
@@ -105,7 +105,7 @@ class launcher(object):
             cmd = path + cmd + ""
         else:
             cmd = path + cmd + " " + flags
-        proc=subprocess.Popen(cmd, shell=True)
+        proc=subprocess.Popen(cmd)
         return proc
 
     def validateConfig(self, cfg, hostOS, hostArchitecture):
