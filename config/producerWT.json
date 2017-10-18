@@ -1,0 +1,17 @@
+{
+  "host": "127.0.0.1",
+  "port": 9090,
+  "pspConfig": {
+    "psp_name": "securenet",
+    "developer_id": "12345678",
+    "secure_key": "<secure_key>",
+    "api_endpoint": "https://gwapi.demo.securenet.com/api/",
+    "public_key": "<public_key>",
+    "secure_net_id": "<secure_net_id>",
+    "app_version": "0.1",
+    "merchant_client_key": "<public_key>",
+    "merchant_service_key": "<secure_key>",
+    "hte_public_key": "<public_key>",
+    "hte_private_key": "<secure_key>"
+  }
+}

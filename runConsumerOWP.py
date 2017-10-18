@@ -3,6 +3,7 @@ import wpwithinpy.WWTypes as WWTypes
 import time
 import os
 import signal
+import jsoncfg
 
 
 def killTheRpcAgent():
@@ -28,15 +29,17 @@ def discoverDevices(): # throws WPWithinGeneralException {
     return devices
 
 def connectToDevice(svcMsg): # throws WPWithinGeneralException {
+
     card = WWTypes.WWHCECard()
-    card.setFirstName("Bilbo")
-    card.setLastName("Baggins")
-    card.setCardNumber("5555555555554444")
-    card.setExpMonth(11)
-    card.setExpYear(2018)
-    card.setType("Card")
-    card.setCvc("113")
-    wpw.initConsumer("http://", svcMsg.getHostname(), svcMsg.getPortNumber(), svcMsg.getUrlPrefix(), svcMsg.getServerId(), card, {"psp_name":"worldpayonlinepayments","api_endpoint":"https://api.worldpay.com/v1"})
+    card.setFirstName(config.hceCard.firstName())
+    card.setLastName(config.hceCard.lastName())
+    card.setCardNumber(config.hceCard.cardNumber())
+    card.setExpMonth(config.hceCard.expMonth())
+    card.setExpYear(config.hceCard.expYear())
+    card.setType(config.hceCard.type())
+    card.setCvc(config.hceCard.cvc())
+
+    wpw.initConsumer("http://", svcMsg.getHostname(), svcMsg.getPortNumber(), svcMsg.getUrlPrefix(), svcMsg.getServerId(), card, config.pspConfig())
 
 def getAvailableServices(): #throws WPWithinGeneralException {
     services = wpw.requestServices()
@@ -115,9 +118,15 @@ def endServiceDelivery(serviceID, token, unitsReceived): # throws WPWithinGenera
     wpw.endServiceDelivery(serviceID, token, unitsReceived)
 
 def run():
+
     print 'Starting Consumer Example Written in Python.'
     global wpw
-    wpw = WPWithinWrapperImpl.WPWithinWrapperImpl('127.0.0.1', 8778, False)
+    global config
+
+    print 'Load configuration.'
+    config = jsoncfg.load_config('config/consumerOWP.json')
+
+    wpw = WPWithinWrapperImpl.WPWithinWrapperImpl(config.host(), config.port(), False)
     try:
         wpw.setup("my-device", "an example consumer device")
         wpwDevice = wpw.getDevice()
