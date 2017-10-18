@@ -76,36 +76,23 @@ class launcher(object):
     #Make it a thread!    
     def launchDarwin(self, path, flags):
         logging.info("launching Darwin application")
-        cmd = '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
-        if flags == None:
-            cmd = path + cmd + ""
-        else:
-            cmd = path + cmd + " " + flags
-        #ls_output=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        #ls_output=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        proc=subprocess.Popen(cmd, shell=True)
+        cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        cmd.extend(flags)
+        proc = subprocess.Popen(cmd)
         return proc
     
     def launchLinux(self, path, flags):
         logging.info("launching Linux application")
-        cmd = '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
-        if flags == None:
-            cmd = path + cmd + ""
-        else:
-            cmd = path + cmd + " " + flags
-        #ls_output=subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        #ls_output=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        proc=subprocess.Popen(cmd, shell=True)
+        cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        cmd.extend(flags)
+        proc = subprocess.Popen(cmd)
         return proc
         
     def launchWindows(self, path, flags):
         logging.info("launching Windows application")
-        cmd = '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
-        if flags == None:
-            cmd = path + cmd + ""
-        else:
-            cmd = path + cmd + " " + flags
-        proc=subprocess.Popen(cmd, shell=True)
+        cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        cmd.extend(flags)
+        proc = subprocess.Popen(cmd)
         return proc
 
     def validateConfig(self, cfg, hostOS, hostArchitecture):
@@ -121,15 +108,3 @@ class launcher(object):
             if indCfg.lower() == hostArchitecture:
                 validArch = True
         return validOS and validArch
-
-
-
-
-
-
-
-
-
-
-
-

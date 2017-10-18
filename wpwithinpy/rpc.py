@@ -20,7 +20,8 @@ def startRPC(self, port, eventListenerPort):
   	  callbackPortString = ""
   
   logging .debug(str(os.getcwd()) + "" + "-port " + str(port) + " -logfile " + logfilename + " -loglevel debug,warn,error,fatal,info" + str(callbackPortString))
-  process = launcherLocal.launch(cfg, os.getcwd() + "", "-port " + str(port) + " -logfile " + logfilename + " -loglevel debug,warn,error,fatal,info" + str(callbackPortString))
+  args = ['-port', str(port), '-logfile', logfilename, '-loglevel', 'debug,warn,error,fatal,info', str(callbackPortString)]
+  process = launcherLocal.launch(cfg, os.getcwd() + "", args)
   
   return process
 
