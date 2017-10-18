@@ -100,12 +100,14 @@ class launcher(object):
         
     def launchWindows(self, path, flags):
         logging.info("launching Windows application")
+        print "launchWindows"
         cmd = '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()
         if flags == None:
             cmd = path + cmd + ""
         else:
             cmd = path + cmd + " " + flags
         proc=subprocess.Popen(cmd, shell=True)
+        print cmd
         return proc
 
     def validateConfig(self, cfg, hostOS, hostArchitecture):

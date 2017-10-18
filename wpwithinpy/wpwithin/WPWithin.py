@@ -81,6 +81,14 @@ class Iface(object):
         """
         pass
 
+    def searchForDevice(self, timeoutMillis, deviceName):
+        """
+        Parameters:
+         - timeoutMillis
+         - deviceName
+        """
+        pass
+
     def requestServices(self):
         pass
 
@@ -424,6 +432,41 @@ class Client(Iface):
             raise result.err
         raise TApplicationException(TApplicationException.MISSING_RESULT, "deviceDiscovery failed: unknown result")
 
+    def searchForDevice(self, timeoutMillis, deviceName):
+        """
+        Parameters:
+         - timeoutMillis
+         - deviceName
+        """
+        self.send_searchForDevice(timeoutMillis, deviceName)
+        return self.recv_searchForDevice()
+
+    def send_searchForDevice(self, timeoutMillis, deviceName):
+        self._oprot.writeMessageBegin('searchForDevice', TMessageType.CALL, self._seqid)
+        args = searchForDevice_args()
+        args.timeoutMillis = timeoutMillis
+        args.deviceName = deviceName
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_searchForDevice(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = searchForDevice_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        if result.success is not None:
+            return result.success
+        if result.err is not None:
+            raise result.err
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "searchForDevice failed: unknown result")
+
     def requestServices(self):
         self.send_requestServices()
         return self.recv_requestServices()
@@ -667,6 +710,7 @@ class Processor(Iface, TProcessor):
         self._processMap["startServiceBroadcast"] = Processor.process_startServiceBroadcast
         self._processMap["stopServiceBroadcast"] = Processor.process_stopServiceBroadcast
         self._processMap["deviceDiscovery"] = Processor.process_deviceDiscovery
+        self._processMap["searchForDevice"] = Processor.process_searchForDevice
         self._processMap["requestServices"] = Processor.process_requestServices
         self._processMap["getServicePrices"] = Processor.process_getServicePrices
         self._processMap["selectService"] = Processor.process_selectService
@@ -881,6 +925,28 @@ class Processor(Iface, TProcessor):
             logging.exception(ex)
             result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
         oprot.writeMessageBegin("deviceDiscovery", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+
+    def process_searchForDevice(self, seqid, iprot, oprot):
+        args = searchForDevice_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = searchForDevice_result()
+        try:
+            result.success = self._handler.searchForDevice(args.timeoutMillis, args.deviceName)
+            msg_type = TMessageType.REPLY
+        except (TTransport.TTransportException, KeyboardInterrupt, SystemExit):
+            raise
+        except wpthrift_types.ttypes.Error as err:
+            msg_type = TMessageType.REPLY
+            result.err = err
+        except Exception as ex:
+            msg_type = TMessageType.EXCEPTION
+            logging.exception(ex)
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("searchForDevice", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
         oprot.trans.flush()
@@ -2195,6 +2261,151 @@ class deviceDiscovery_result(object):
             for iter24 in self.success:
                 iter24.write(oprot)
             oprot.writeSetEnd()
+            oprot.writeFieldEnd()
+        if self.err is not None:
+            oprot.writeFieldBegin('err', TType.STRUCT, 1)
+            self.err.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+
+
+class searchForDevice_args(object):
+    """
+    Attributes:
+     - timeoutMillis
+     - deviceName
+    """
+
+    thrift_spec = (
+        None,  # 0
+        (1, TType.I32, 'timeoutMillis', None, None, ),  # 1
+        (2, TType.STRING, 'deviceName', 'UTF8', None, ),  # 2
+    )
+
+    def __init__(self, timeoutMillis=None, deviceName=None,):
+        self.timeoutMillis = timeoutMillis
+        self.deviceName = deviceName
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, (self.__class__, self.thrift_spec))
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.I32:
+                    self.timeoutMillis = iprot.readI32()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
+                if ftype == TType.STRING:
+                    self.deviceName = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, (self.__class__, self.thrift_spec)))
+            return
+        oprot.writeStructBegin('searchForDevice_args')
+        if self.timeoutMillis is not None:
+            oprot.writeFieldBegin('timeoutMillis', TType.I32, 1)
+            oprot.writeI32(self.timeoutMillis)
+            oprot.writeFieldEnd()
+        if self.deviceName is not None:
+            oprot.writeFieldBegin('deviceName', TType.STRING, 2)
+            oprot.writeString(self.deviceName.encode('utf-8') if sys.version_info[0] == 2 else self.deviceName)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+
+
+class searchForDevice_result(object):
+    """
+    Attributes:
+     - success
+     - err
+    """
+
+    thrift_spec = (
+        (0, TType.STRUCT, 'success', (wpthrift_types.ttypes.ServiceMessage, wpthrift_types.ttypes.ServiceMessage.thrift_spec), None, ),  # 0
+        (1, TType.STRUCT, 'err', (wpthrift_types.ttypes.Error, wpthrift_types.ttypes.Error.thrift_spec), None, ),  # 1
+    )
+
+    def __init__(self, success=None, err=None,):
+        self.success = success
+        self.err = err
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, (self.__class__, self.thrift_spec))
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 0:
+                if ftype == TType.STRUCT:
+                    self.success = wpthrift_types.ttypes.ServiceMessage()
+                    self.success.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 1:
+                if ftype == TType.STRUCT:
+                    self.err = wpthrift_types.ttypes.Error()
+                    self.err.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, (self.__class__, self.thrift_spec)))
+            return
+        oprot.writeStructBegin('searchForDevice_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            self.success.write(oprot)
             oprot.writeFieldEnd()
         if self.err is not None:
             oprot.writeFieldBegin('err', TType.STRUCT, 1)

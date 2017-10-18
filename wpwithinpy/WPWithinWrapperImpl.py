@@ -157,6 +157,17 @@ class WPWithinWrapperImpl(object):
             self.killRpcAgent()
             raise WWTypes.WPWithinGeneralException("Failed device discovery in wrapper", e)                     
 
+    def searchForDevice(self, timeout, deviceName):
+        logging.info("STARTING SEARCH FOR DEVICE")
+        try:
+            svcMsgs = ServiceAdapter.convertServiceMessage(self.getClient().searchForDevice(timeout, deviceName))
+            logging.info("Finished searching for device: "+deviceName)
+            return svcMsgs
+        except Exception as e:
+            logging.info("Failed search for device in wrapper: " + str(e))
+            self.killRpcAgent()
+            raise WWTypes.WPWithinGeneralException("Failed search for device in wrapper", e)
+
     def initConsumer(self, scheme, hostname, port, urlPrefix, serverId, hceCard, pspConfig):
         try:
 		    self.getClient().initConsumer(scheme, hostname, port, urlPrefix, serverId, ServiceAdapter.convertWWHCECard(hceCard), pspConfig)
