@@ -128,7 +128,7 @@ def run():
         while repeat2 < 99999999999:
             print "Producer keeping alive (to receive callbacks...)"
             time.sleep(1)
-            repeat2 = repeat2 + 1        
+            repeat2 = repeat2 + 1
     except WWTypes.WPWithinGeneralException as e:
         print "WPWithinGeneralException caught:", e
     except Exception as exc:

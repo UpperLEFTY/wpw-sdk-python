@@ -41,7 +41,8 @@ class WPWithinWrapperImpl(object):
 
 
     def killRpcAgent(self):
-        self.rpcProcess.kill()
+        if self.rpcProcess is not None:
+            self.rpcProcess.kill()
 
     def setClientIfNotSet(self):
 		if self.cachedClient == None:
