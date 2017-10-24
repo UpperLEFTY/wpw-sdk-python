@@ -142,7 +142,7 @@ class WPWithinWrapperImpl(object):
             raise WWTypes.WPWithinGeneralException("RPC process killed.", e)
 
     def signal_handler(self, signum, frame):
-        print "Signal ", signal.Signals(signum).name, " caught, stopping RPC agent."
+        print "Signal", signum, "caught, stopping RPC agent."
         self.stopRPCAgent()
 
     def deviceDiscovery(self, timeout):
