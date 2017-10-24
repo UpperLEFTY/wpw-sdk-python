@@ -133,7 +133,7 @@ class WPWithinWrapperImpl(object):
             self.getClient().CloseRPCAgent()
         except socket.error as er:
             time.sleep(2)
-            if self.rpcProcess.poll() is not None:
+            if self.rpcProcess is None or self.rpcProcess.poll() is not None:
                 logging.info("RPC agent closed.")
             else:
                 self.killRpcAgent()
