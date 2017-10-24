@@ -56,7 +56,9 @@ def run():
 		    time.sleep(1)
 		    repeat2 = repeat2 + 1        
 	except WWTypes.WPWithinGeneralException as e:
-		print e
+		print "WPWithinGeneralException caught:", e
+	except Exception as exc:
+		print "Exception caught:", exc
 
 clearDownRpc()
 run()

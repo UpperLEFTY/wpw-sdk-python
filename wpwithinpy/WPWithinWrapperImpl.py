@@ -142,9 +142,8 @@ class WPWithinWrapperImpl(object):
             raise WWTypes.WPWithinGeneralException("RPC process killed.", e)
 
     def signal_handler(self, signum, frame):
-        print "You pressed ctrl + c"
+        print "Signal ", signal.Signals(signum).name, " caught, stopping RPC agent."
         self.stopRPCAgent()
-
 
     def deviceDiscovery(self, timeout):
         logging.info('STARTING DO DEVICE DISCOVERY')
