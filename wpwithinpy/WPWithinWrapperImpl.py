@@ -24,6 +24,7 @@ import signal
 
 class WPWithinWrapperImpl(object):
     cachedClient = None
+    rpcProcess = None
     logging.basicConfig(filename='worldpay-within-wrapper.log',level=logging.DEBUG)
 
     def __init__(self, ipAddress, portNumber, startRpcCallbackAgent=False, wpWithinEventListener=None, eventListenerPort=0):
