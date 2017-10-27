@@ -9,7 +9,7 @@ global data2
 data2 = []
 
 def killRpcAgent():
-    killCommand = "ps aux | grep -i 'rpc-agent.*port.*8778' | awk '{print $2}' | xargs kill -9"
+    killCommand = "ps aux | grep -i 'rpc-agent.*port.*8778' | awk '{print($2}' | xargs kill -9")
     # Finding the process based on the port number is safer than relying on the pid number that it was started on
     os.system(killCommand)
 
@@ -30,7 +30,7 @@ def resetJson():
         with open('/Library/WebServer/Documents/worldpaywithin/device-scanner.json', 'w') as outfile:
             json.dump(data3, outfile)
     except Exception:
-        print "You need to configure the webserver path if you want to output json"
+        print("You need to configure the webserver path if you want to output json")
 
 def outputJson(svcMsg, numberOfServices):
     global data2
@@ -46,7 +46,7 @@ def outputJson(svcMsg, numberOfServices):
         with open('/Library/WebServer/Documents/worldpaywithin/device-scanner.json', 'w') as outfile:
             json.dump(data2, outfile)
     except Exception:
-        print "You need to configure the webserver path if you want to output json"
+        print("You need to configure the webserver path if you want to output json")
 
 
 def scanOnce():
@@ -54,7 +54,7 @@ def scanOnce():
     data2 = []
     #resetJson()
     flagScanTimeout = 9000
-    print 'Starting Device Scanner Written in Python.'
+    print('Starting Device Scanner Written in Python.')
     global wpw
     wpw = WPWithinWrapperImpl.WPWithinWrapperImpl('127.0.0.1', 8778, False)
     try:
@@ -65,14 +65,14 @@ def scanOnce():
         try:
             deviceName = wpwDevice.getName()
         except Exception:
-            print "Device name not yet implemented"
+            print("Device name not yet implemented")
             deviceName = "Unimpl"
         if deviceName is None:
             deviceName = "Unimpl"
 
-        print "::" + wpwDevice.getUid() + ":" + deviceName + ":" + wpwDevice.getDescription() + ":" + str(wpwDevice.getServices()) + ":" + wpwDevice.getIpv4Address() + ":" + wpwDevice.getCurrencyCode()
-        print "Scanning network for devices now..."
-        print "Will scan for " + str(flagScanTimeout) + " milliseconds\n"
+        print("::" + wpwDevice.getUid() + ":" + deviceName + ":" + wpwDevice.getDescription() + ":" + str(wpwDevice.getServices()) + ":" + wpwDevice.getIpv4Address() + ":" + wpwDevice.getCurrencyCode())
+        print("Scanning network for devices now...")
+        print("Will scan for " + str(flagScanTimeout) + " milliseconds\n")
 
         if wpwDevice != None:
             devices = wpw.deviceDiscovery(flagScanTimeout)    
@@ -80,8 +80,8 @@ def scanOnce():
 
                 if len(devices) > 0:
 
-                    print "------------------------------------------------------------"
-                    print "Found " + str(len(devices)) + " devices\n"
+                    print("------------------------------------------------------------")
+                    print("Found " + str(len(devices)) + " devices\n")
 
                     
 
@@ -95,15 +95,15 @@ def scanOnce():
                         try:
                             deviceName2 = svcMsg.getDeviceName()
                         except Exception as e:
-                            print "Device name not yet implemented"
+                            print("Device name not yet implemented")
                             print(str(e))
                             deviceName2 = "Unimpl1"
                         if deviceName2 is None:
                             deviceName2 = "Unimpl2"
-                        print "DeviceName:[" + deviceName2 + "] no-of-services:[" + str(numberOfServices) + "] [" + svcMsg.getServerId() + "] " + svcMsg.getDeviceDescription() + " @ " + svcMsg.getHostname() + ":" + str(svcMsg.getPortNumber()) + "" + svcMsg.getUrlPrefix() + "\n"					
+                        print("DeviceName:[" + deviceName2 + "] no-of-services:[" + str(numberOfServices) + "] [" + svcMsg.getServerId() + "] " + svcMsg.getDeviceDescription() + " @ " + svcMsg.getHostname() + ":" + str(svcMsg.getPortNumber()) + "" + svcMsg.getUrlPrefix() + "\n"					)
                         outputJson(svcMsg, numberOfServices)
 
-                    print "------------------------------------------------------------"
+                    print("------------------------------------------------------------")
                 else:
                     resetJson();
             else:
@@ -112,10 +112,10 @@ def scanOnce():
         wpw.stopRPCAgent()
     except WWTypes.WPWithinGeneralException as wpge:
         killRpcAgent()
-        print wpge
+        print(wpge)
     except Exception as wpge2:
         killRpcAgent()
-        print wpge2
+        print(wpge2)
  
 def run():
     while True:

@@ -5,11 +5,11 @@ import jsoncfg
 
 def run():
 	try:
-		print "WorldpayWithin Sample Producer..."
+		print("WorldpayWithin Sample Producer...")
 		global wpw
 		global config
 
-		print "Load configuration."
+		print("Load configuration.")
 		config = jsoncfg.load_config('config/producerOWP.json')
 
 		wpw = WPWithinWrapperImpl.WPWithinWrapperImpl(config.host(), config.port(), False)
@@ -30,33 +30,33 @@ def run():
 		prices = {}
 		prices[ccPrice.getId()] = ccPrice
 		svc.setPrices(prices)
-		print "WorldpayWithin Sample Producer: About to init the producer with crendentials"
+		print("WorldpayWithin Sample Producer: About to init the producer with crendentials")
 		# [ CLIENT KEY, SERVICE KEY] : From online.worldpay.com
 		wpw.initProducer(config.pspConfig())
-		print "WorldpayWithin Sample Producer: Adding service"
+		print("WorldpayWithin Sample Producer: Adding service")
 		wpw.addService(svc)
 		broadcastDuration = 20000
 		durationSeconds = broadcastDuration / 1000
 
 		while True:
-			print "WorldpayWithin Sample Producer: Starting broadcast..."		
+			print("WorldpayWithin Sample Producer: Starting broadcast..."		)
 			wpw.startServiceBroadcast(broadcastDuration) #20000
 			wpw.startServiceBroadcast(durationSeconds)
 			repeat = 0
 			while repeat < durationSeconds:
-			    print "Producer Waiting " + str(durationSeconds - repeat) + " seconds to go..."
+			    print("Producer Waiting " + str(durationSeconds - repeat) + " seconds to go...")
 			    time.sleep(1)
 			    repeat = repeat + 1
 
-		# print "Stopped broadcasting, RPC still running"
+		# print("Stopped broadcasting, RPC still running")
 		# repeat2 = 0
 		# while repeat2 < 99999999999:
-		#     print "Producer keeping alive (to receive callbacks...)"
+		#     print("Producer keeping alive (to receive callbacks...)")
 		#     time.sleep(1)
 		#     repeat2 = repeat2 + 1        
 	except WWTypes.WPWithinGeneralException as e:
-		print "WPWithinGeneralException caught:", e
+		print("WPWithinGeneralException caught:", e)
 	except Exception as exc:
-		print "Exception caught:", exc
+		print("Exception caught:", exc)
 
 run()

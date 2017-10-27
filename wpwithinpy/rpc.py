@@ -17,7 +17,7 @@ def startRPC(self, port, eventListenerPort):
   if eventListenerPort > 0:
       callbackPortString = " -callbackport=" + str(eventListenerPort)
   else:
-  	  callbackPortString = ""
+      callbackPortString = ""
   
   logging .debug(str(os.getcwd()) + "" + "-port " + str(port) + " -logfile " + logfilename + " -loglevel debug,warn,error,fatal,info" + str(callbackPortString))
   args = ['-port', str(port), '-logfile', logfilename, '-loglevel', 'debug,warn,error,fatal,info', str(callbackPortString)]
@@ -26,5 +26,5 @@ def startRPC(self, port, eventListenerPort):
   return process
 
 def stopRPC(self, process):
-  print "Will try and stop RPC service"
+  print("Will try and stop RPC service")
   process.kill()
