@@ -1,6 +1,7 @@
 #!/usr/bin/python
 ## Python Launcher
 import platform
+import os
 import sys
 from subprocess import call
 import subprocess
@@ -76,21 +77,30 @@ class launcher(object):
     #Make it a thread!    
     def launchDarwin(self, path, flags):
         logging.info("launching Darwin application")
-        cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        if os.environ.get("WPW_HOME") is not None:
+            cmd = [os.environ["WPW_HOME"]+'/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        else:
+            cmd = ['/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
         cmd.extend(flags)
         proc = subprocess.Popen(cmd)
         return proc
     
     def launchLinux(self, path, flags):
         logging.info("launching Linux application")
-        cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        if os.environ.get("WPW_HOME") is not None:
+            cmd = [os.environ["WPW_HOME"]+'/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        else:
+            cmd = ['/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
         cmd.extend(flags)
         proc = subprocess.Popen(cmd)
         return proc
         
     def launchWindows(self, path, flags):
         logging.info("launching Windows application")
-        cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        if os.environ.get("WPW_HOME") is not None:
+            cmd = [os.environ["WPW_HOME"]+'/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+        else:
+            cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
         cmd.extend(flags)
         proc = subprocess.Popen(cmd)
         return proc
