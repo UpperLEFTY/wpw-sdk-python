@@ -80,7 +80,7 @@ class launcher(object):
         if os.environ.get("WPW_HOME") is not None:
             cmd = [os.environ["WPW_HOME"]+'/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
         else:
-            cmd = ['/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+            cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
         cmd.extend(flags)
         proc = subprocess.Popen(cmd)
         return proc
@@ -90,7 +90,7 @@ class launcher(object):
         if os.environ.get("WPW_HOME") is not None:
             cmd = [os.environ["WPW_HOME"]+'/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
         else:
-            cmd = ['/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
+            cmd = [path + '/wpwithinpy/iot-core-component/bin/rpc-agent-' + self.detectHostOS() + '-' + self.detectHostArchitecture()]
         cmd.extend(flags)
         proc = subprocess.Popen(cmd)
         return proc
